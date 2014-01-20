@@ -11,7 +11,7 @@ When replaying such as records, it is necessary to load both the revisit record 
 pywb currently relies on [wayback-cdx-server][1] semantics for resolving revisit records.
 
 Joining CDX Lines Optimization
-==============================
+------------------------------
 
 Often times (but not always, see below on [#Url-Agnostic Deduplication]), the original record is an earlier capture of the same url.
 
