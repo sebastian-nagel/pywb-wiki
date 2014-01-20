@@ -13,7 +13,7 @@ pywb currently relies on [wayback-cdx-server][1] semantics for resolving revisit
 Joining CDX Lines Optimization
 ------------------------------
 
-Often times (but not always, see below on [Different Url Revisit Records](.#different-url-revisit-records)), the original record is an earlier capture of the same url.
+Often times (but not always, see below on [Different Url Revisit Records](PyWb-Record-Lookup-and-Revisits#different-url-revisit-records)), the original record is an earlier capture of the same url.
 
 Since the cdx server reads the urls in sorted order by timestamp, it is easy to track and 'resolve' the record against the previous capture by joining cdx lines with matching hash digest.
 This prevents pywb from having to do a 2nd index lookup on the same url.
