@@ -37,7 +37,7 @@ com,example)/ 20140116020757 http://example.com/ text/html 200 B2LTWWPUOYAH7UIPQ
 The 3 entries `(orig.offset, orig.length, orig.filename)` of the original are added to the regular 11-field CDX lines, to produce a merged 14 field line.
 
 How PyWb Resolves Records
-=========================
+-------------------------
 
 pywb can consume the 14-field records as explained above, and performs the following checks.
 It is designed to support the widest variety of warc revisit patterns.
@@ -55,7 +55,7 @@ Replay http headers from the `filename` warc and payload from `orig.filename`
 Case 4: Special case of 3. The warc/revisit record has no http headers (`Content-Length: 0`), replay http headers and payload from the original record. While the headers should have been included in the revisit record by the crawler, there are instances of empty revisit records.
 
 Different Url Revisit Records
-============================
+-----------------------------
 
 So far, the assumption has been that the original capture is of the same url as the revisit.
 However, with latest WARC standard, it is possible to have an original capture with different url and matching digest. For example a capture of `http://example.com` could be the same as that from `http://example.iana.org/`
