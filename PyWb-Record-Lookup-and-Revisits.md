@@ -1,6 +1,3 @@
-PyWb Record Lookup and Revisits
--------------------------------
-
 (Note: this is an evolving document as PyWb is under major development)
 
 
