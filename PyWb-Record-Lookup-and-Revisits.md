@@ -1,5 +1,5 @@
 PyWb Record Lookup and Revisits
-===============================
+-------------------------------
 
 (Note: this is an evolving document as PyWb is under major development)
 
@@ -14,7 +14,7 @@ When replaying such as records, it is necessary to load both the revisit record 
 pywb currently relies on [wayback-cdx-server][1] semantics for resolving revisit records.
 
 Joining CDX Lines Optimization
-------------------------------
+==============================
 
 Often times (but not always, see below on [#Url-Agnostic Deduplication]), the original record is an earlier capture of the same url.
 
@@ -40,7 +40,7 @@ com,example)/ 20140116020757 http://example.com/ text/html 200 B2LTWWPUOYAH7UIPQ
 The 3 entries `(orig.offset, orig.length, orig.filename)` of the original are added to the regular 11-field CDX lines, to produce a merged 14 field line.
 
 How PyWb Resolves Records
--------------------------
+=========================
 
 pywb can consume the 14-field records as explained above, and performs the following checks.
 It is designed to support the widest variety of warc revisit patterns.
