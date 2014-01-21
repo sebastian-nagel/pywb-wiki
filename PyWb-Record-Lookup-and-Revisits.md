@@ -31,21 +31,28 @@ to replay the capture at 20140116020757, the warc record at 20130730210139 will 
 The **resolveRevisits=true** flags allows the cdx server to join the two lines, as follows:
 
 ```
-com,example)/ 20140116020757 http://example.com/ text/html 200 B2LTWWPUOYAH7UIPQ7ZUPQ4VMBSVC36A - - 524 271204751 top_domains-00500-20140115-204608/top_domains-00500-20140116015012-00006.warc.gz 524 271204751 top_domains-00500-20140115-204608/top_domains-00500-20140116015012-00006.warc.gz
+com,example)/ 20130730210139 http://www.example.com/ text/html 200 B2LTWWPUOYAH7UIPQ7ZUPQ4VMBSVC36A - - 830 15152354 live-20130730183509913-02223-20130730214633985/live-20130730205901684-02244.arc.gz - - -
+...
+com,example)/ 20140116020757 http://example.com/ text/html 200 B2LTWWPUOYAH7UIPQ7ZUPQ4VMBSVC36A - - 524 271204751 top_domains-00500-20140115-204608/top_domains-00500-20140116015012-00006.warc.gz 830 15152354 live-20130730183509913-02223-20130730214633985/live-20130730205901684-02244.arc.gz
 ```
 
-The 3 entries `(orig.offset, orig.length, orig.filename)` of the original are added to the regular 11-field CDX lines, to produce a merged 14 field line.
+The 3 entries extra fields, orig.offset, orig.length, orig.filename, of the original record are added to the regular 11-field CDX lines, to produce a final 14 field line.
 
-## How PyWb Resolves Records
+In the case of non-revisit records, the last 3 fields are just blank, eg. '- - -'
 
+Even though ARC files can not have revisit records themselves, it is possible for an ARC record to be referenced as the original record.
+
+
+## How pywb Resolves Records
 
 pywb can consume the 14-field records as explained above, and performs the following checks.
 It is designed to support the widest variety of warc revisit patterns.
+
 (The below cases correspond to the logic listed in [replay.py][2])
 
-**Case 2:**  Regular (ARC or WARC) record. The http headers and payload are replaying from the same record.
+**Case 2:**  Regular (ARC or WARC) record. The original record fields are an empty '-'. The http headers and payload are replayed from the same record.
 
-**Case 3:** The `orig.filename` field is present, so this is a revisit record and a match for the original has been found with the same digest. Load payload from the `orig.filename` record.
+**Case 3:** The original record fields are present (not a empty '-'), so this is a revisit record and a match for the original has been found with the same digest. The headers are replayed from the current filename (11-th) field, while the payload is replayed from the record specified by the original filename (14-th) field
 
 
 ### Different Url Revisit Records
