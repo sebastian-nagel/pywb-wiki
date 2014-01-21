@@ -28,7 +28,7 @@ com,example)/ 20140116020757 http://example.com/ warc/revisit - B2LTWWPUOYAH7UIP
 
 to replay the capture at 20140116020757, the warc record at 20130730210139 will also need to be loaded.
 
-The `resolveRevisits=true` flags allows the cdx server to join the two lines, as follows:
+The **resolveRevisits=true** flags allows the cdx server to join the two lines, as follows:
 
 ```
 com,example)/ 20140116020757 http://example.com/ text/html 200 B2LTWWPUOYAH7UIPQ7ZUPQ4VMBSVC36A - - 524 271204751 top_domains-00500-20140115-204608/top_domains-00500-20140116015012-00006.warc.gz 524 271204751 top_domains-00500-20140115-204608/top_domains-00500-20140116015012-00006.warc.gz
