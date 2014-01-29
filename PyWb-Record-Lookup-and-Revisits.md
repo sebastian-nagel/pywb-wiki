@@ -78,5 +78,5 @@ Some other special cases involving revisits are as follows:
 
 If either the payload or headers records could not be resolved, the replay will fail.
 
-[1]: cdxserve.py
-[2]: https://github.com/ikreymer/pywb/blob/master/pywb/replay.py
+[1]: ../blob/master/cdxserve.py
+[2]: ../blob/master/replay.py
