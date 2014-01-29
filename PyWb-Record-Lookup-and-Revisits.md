@@ -8,8 +8,6 @@ The WARC file format supports records of type `warc/revisit` where the actual ht
 This can save a lot of space when crawling, but adds a bit of complexity for replay.
 When replaying such as records, it is necessary to load both the revisit record and the original payload record.
 
-pywb currently relies on [wayback-cdx-server][1] semantics for resolving revisit records.
-
 ### Joining CDX Lines Optimization
 
 
@@ -28,7 +26,7 @@ com,example)/ 20140116020757 http://example.com/ warc/revisit - B2LTWWPUOYAH7UIP
 
 to replay the capture at 20140116020757, the warc record at 20130730210139 will also need to be loaded.
 
-The **resolveRevisits=true** flags allows the cdx server to join the two lines, as follows:
+The **resolve_revisits=true** flags allows the cdx server to join the two lines, as follows:
 
 ```
 com,example)/ 20130730210139 http://www.example.com/ text/html 200 B2LTWWPUOYAH7UIPQ7ZUPQ4VMBSVC36A - - 830 15152354 live-20130730183509913-02223-20130730214633985/live-20130730205901684-02244.arc.gz - - -
@@ -42,6 +40,7 @@ In the case of non-revisit records, the last 3 fields are just blank, eg. '- - -
 
 Even though ARC files can not have revisit records themselves, it is possible for an ARC record to be referenced as the original record.
 
+The implementation of **resolve_revisits=True** and other cdx operations can be found in [cdxserve.py][1]
 
 ## How pywb Resolves Records
 
@@ -79,6 +78,5 @@ Some other special cases involving revisits are as follows:
 
 If either the payload or headers records could not be resolved, the replay will fail.
 
-
-[1]: https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server
+[1]: cdxserve.py
 [2]: https://github.com/ikreymer/pywb/blob/master/pywb/replay.py
