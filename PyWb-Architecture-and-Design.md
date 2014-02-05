@@ -87,8 +87,8 @@ The *RewritingReplayView* also supports a custom html template which is inserted
 
 #### Other processing
 
-The html rewriter also rewriters headers via the `HeaderRewriter` to ensure redirects are properly handled.
-Gzipped and chunked content is normalized, and `chardet` library is used to determine charset before parsing.
+The html rewriter also rewriters headers via the *HeaderRewriter* to ensure redirects are properly handled.
+Gzipped and chunked content is normalized, and **chardet** package is used to determine charset before parsing.
 
 ---
 
