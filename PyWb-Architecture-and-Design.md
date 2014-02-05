@@ -2,17 +2,17 @@
 
 Some of pywb hopes to achieve.
 
-** Support simplest use case: replay archive content given archive files (.warc/.arc) and indexs (.cdx) in a directory
+* **Support simplest use case:** replay archive content given archive files (.warc/.arc) and indexs (.cdx) in a directory
 
-** Well tested components: In-depth testing of content rewriting and other components. Sample archived content used for unit and integration testing, and continuous integration.
+* **Well-tested components:** In-depth testing of content rewriting and other components. Sample archived content used for unit and integration testing, and continuous integration.
 
-** Run 'out-of-the-box': Deployable from first pull, and runnable directly and via a [virtual development environments](http://www.vagrantup.com/)
+* **Run 'out-of-the-box':** Deployable from first pull, and runnable directly and via a [virtual development environments](http://www.vagrantup.com/)
 
-** Usable Defaults and Easy Configuration: Simple settings like archive, index, and ui template paths are configured via a .yaml file which comes with usable defaults.
+* **Usable Defaults and Easy Configuration:** Simple settings like archive, index, and ui template paths are configured via a .yaml file which comes with usable defaults.
 
-** Flexible Content Rewriting: Provide a powerful framework to rewrite and replay difficult web content, such as dynamic content, as best as current technology will allow.
+* **Flexible Content Rewriting:** Provide a rule based framework to rewrite and replay difficult web content, such as dynamic content, as best as current technology will allow.
 
-** Advanced Customization: Every component of pywb is pluggable and customizable for advanced users to maximize flexibility.
+* **Advanced Customization:** Every component of pywb is pluggable and customizable for advanced users to maximize flexibility.
 
 
 ### Component Architecture
@@ -32,9 +32,10 @@ Currently, pywb consists of the following components:
 * **Views/UI** -- Basic UI for non-archival content is supported via Jinja2 html templates. Very very basic templates are provided for: home page, search page, query page and replay insert.
 
 
-### Control Flow Diagram
+### Control Flow Diagram v0.1
 
 The following diagram provides a more in-depth look at request/response control flow through pywb 0.1.
+
 * The highlighted *CDX Server* component will eventually move into a subpackage as it provides more generic functionality for querying archive indexes.
 
 ![Component Control Flow](https://archive.org/~ilya/pywb_control_flow.png)
