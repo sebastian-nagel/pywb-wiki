@@ -1,5 +1,7 @@
-The following is a diagram and brief overview of different components of pywb to date.
+pywb is designed to be a simple to use modify web app for replaying archived web content accurately.
+The following is a diagram and brief overview of different components of pywb thus far.
 
+### Component Diagram
 (Open in New Window for better view)
 
 ![pywb architecture diag](https://archive.org/~ilya/pywb_arch_diag.png)
