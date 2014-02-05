@@ -6,7 +6,7 @@ Some of the things pywb aspires to achieve.
 
 * **Well-tested components:** In-depth testing of content rewriting and other components. Sample archived content used for unit and integration testing, and continuous integration.
 
-* **Run 'out-of-the-box':** Deployable from first pull, and runnable directly and via a [virtual development environments](http://www.vagrantup.com/)
+* **Run 'out-of-the-box':** Deployable from first pull, and runnable directly and via a [virtual development environment](http://www.vagrantup.com/)
 
 * **Usable Defaults and Easy Configuration:** Simple settings like archive, index, and ui template paths are configured via a .yaml file which comes with usable defaults.
 
