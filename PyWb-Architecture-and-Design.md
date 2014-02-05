@@ -73,11 +73,13 @@ The *RewritingReplayView* also supports a custom html template which is inserted
 The html rewriter also rewriters headers via the `HeaderRewriter` to ensure redirects are properly handled.
 Gzipped and chunked content is normalized, and `chardet` library is used to determine charset before parsing.
 
-#### Customization/Domain Specific Rewriting
-
-To properly render difficult/dynamic sites, rewriting may need to be customized on a domain specific level.
-The HTML, CSS, JS, XML can be replaced in a custom rewriting view.
-
 ---
 
-If successful, the rewritten response is returned via a `WbResponse` object back up the chain to the WSGI callback. Any errors are reported to the user.
+*** Further development for pywb
+
+The rewriting component is certainly the most complex and will see a lot of development. 
+A few possible directions:
+
+* Custom rewriting views to alter the HTML, CSS, JS, XML rewriters
+* Domain-specific rewriters to alter rewriting, particularly JS, based on current site or other criteria
+* Client-side JS rewrite via the Wombat library.
