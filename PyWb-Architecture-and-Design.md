@@ -34,16 +34,16 @@ Currently, pywb consists of the following components:
 * **Views/UI** -- Basic UI for non-archival content is supported via Jinja2 html templates. Very very basic templates are provided for: home page, search page, query page and replay insert.
 
 
-### PyWb Control Flow
+### PyWb Control Flows
 
-Currently, the pywb requests handling flows through one of the following possible handling chains:
+Currently, the pywb requests fall into one of the following control flow scenarios, listed in order of increasing complexity:
 
-1. **Archival Replay of Text Content:** WSGI <-> Routing <-> Index Loading (CDX) <-> Archive Loading (WARC/ARC) <-> Streaming or Buffered Rewritten HTML/JS/CSS/XML Content
+1. **Static Pages (Home, Search) or Errors:** WSGI <-> Routing <-> Jinja2/HTML Response
 
-2. **Archival Replay of Binary Content:** WSGI <-> Routing <-> Index Loading (CDX) <-> Streaming Archive Content (WARC/ARC) 
+2. **Captures Listing/Query:** WSGI <-> Routing <-> Index Loading (CDX) -> Jinja2/HTML Template
 
-3. **Captures Listing/Query:** WSGI <-> Routing <-> Index Loading (CDX) -> Jinja2/HTML Template
+3. **Archival Replay of Binary Content:** WSGI <-> Routing <-> Index Loading (CDX) <-> Streaming Archive Content (WARC/ARC) 
 
-4. **Static Pages (Home, Search) or Errors:** WSGI <-> Routing <-> Jinja2/HTML Response
+4. **Archival Replay of Text Content:** WSGI <-> Routing <-> Index Loading (CDX) <-> Archive Loading (WARC/ARC) <-> Streaming or Buffered Rewritten HTML/JS/CSS/XML Content
 
 
