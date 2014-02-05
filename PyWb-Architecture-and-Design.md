@@ -77,7 +77,7 @@ Gzipped and chunked content is normalized, and `chardet` library is used to dete
 
 ---
 
-### Further development for pywb
+### Further development for PyWb
 
 The rewriting component is certainly the most complex and will see a lot of development. 
 A few possible directions:
