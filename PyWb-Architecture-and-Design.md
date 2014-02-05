@@ -4,7 +4,7 @@ It consists of the following components (modules):
 
 * **Config Parsing** -- App configuration is loaded from a .yaml file and further extendable via a custom init module.
 
-* **Routing and Handlers** -- Support for routing archival url (eg. urls `/pywb/timestamp/url`) requests, as well as other requests, such as http proxy, to the appropriate handler defined in the config.
+* **Routing and Handlers** -- Support for routing archival url (eg. urls of the form `/pywb/timestamp/url`) requests, as well as other requests, such as http proxy, to the appropriate handler defined in the config.
 
 * **Archive Index Loading** -- Archive indices, .cdx, files can be loaded locally or via a remote cdx server interface.
 
