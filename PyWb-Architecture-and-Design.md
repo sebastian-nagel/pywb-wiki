@@ -1,6 +1,6 @@
 ### Design Goals
 
-Some of pywb hopes to achieve.
+Some of the things pywb aspires to achieve.
 
 * **Support simplest use case:** replay archive content given archive files (.warc/.arc) and indexs (.cdx) in a directory
 
