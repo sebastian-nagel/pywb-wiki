@@ -1,6 +1,6 @@
-The following is a brief overview of different components of pywb to date.
+The following is a diagram and brief overview of different components of pywb to date.
 
-### PyWb Outline
+(Open in New Window for better view)
 
 ![pywb architecture diag](https://archive.org/~ilya/pywb_arch_diag.png)
 
