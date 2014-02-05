@@ -37,13 +37,14 @@ The index contains a mapping from url to archived content file and offset/length
 
 pywb currently supports the CDX format, which is a plain text format where each capture is represent by a multi line field.
 
-pywb can connect via HTTP to a *RemoteCDXServer* which returns a stream of filtered CDX lines for a given query. This allows for pywb to run on a machine separate from the index, provided the index is accessible via a cdx server.
+pywb can connect via HTTP to a *RemoteCDXServer* which returns a stream of filtered CDX lines for a given query. This allows for pywb to run on a machine separate from the index, provided the index is accessible via a cdx server. pywb is currently compatible with the existing wayback cdx server at [wayback-cdx-server](https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server)
 
-#### CDX Server
+
+#### Embedded CDX Server
 
 pywb contains a full CDX server *LocalCDXServer* which can search, sort, filter and query CDX files locally stored and return a stream of cdx text lines to pywb.
 
-This component is more general than requirements of pywb and will probably be moved to a subpackage to allow standalone use as a WSGI app.
+This component is more general than requirements (a reimplementation of [wayback-cdx-server](https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server) of pywb and will soon be moved to a subpackage to allow standalone use as a WSGI app.
 
 
 #### Exclusions
