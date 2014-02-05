@@ -50,9 +50,11 @@ After obtaining filename, offset, length info from the cdx index, pywb will atte
 
 pywb supports several views that render responses to the user.
 For non-archival content, Jinja2 template system is used to render html for query page.
-The template .html ca be configured in the YAML config or disabled altogether.
+The template .html can be configured in the YAML config or disabled altogether.
 
 For archival content, pywb supports either transparent replay which streams archival content unaltered, or a pluggable *RewritingReplayView* which supports url rewriting.
+
+Each view creates a *WbResponse* which is returned up the chain to the application callback and WSGI.
 
 ### Url Rewriting
 
@@ -75,7 +77,7 @@ Gzipped and chunked content is normalized, and `chardet` library is used to dete
 
 ---
 
-*** Further development for pywb
+### Further development for pywb
 
 The rewriting component is certainly the most complex and will see a lot of development. 
 A few possible directions:
