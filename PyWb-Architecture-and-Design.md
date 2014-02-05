@@ -1,5 +1,4 @@
-Here's a brief overview of the various components of `pywb` to date.
-
+The following is a brief overview of different components of pywb to date.
 
 ### Config Loading/Bootstrap
 
@@ -40,5 +39,45 @@ This allows for pywb to run in a WSGI container without a local index, provided 
 
 ### ARC/WARC Reading
 
+pywb supports reading compressed and uncompressed .warc and .arc files, from either local file system (FileReader) or via HTTP 1.1 Range requests (HttpReader).
+pywb reads and parses warc and arc headers, and maintains a stream of the record for further processing or streaming back via WSGI.
 
+#### Archive File Resolvers
 
+After obtaining filename, offset, length info from the cdx index, pywb will attempt to locate the specified archive file using a resolver. The resolver converts the relative filename from the index to the absolute filename where pywb may find the warc/arc. The simplest (default) resolve is the `PrefixResolver` where a local directory or http path is prepended to the filename. Other resolvers include a `PathIndexResolver` where the file is looked up in a local index, and `RedisResolver` where the filename is looked up as a key in a Redis key-store cache.
+
+### Views/UI
+
+pywb supports several views that render responses to the user.
+For non-archival content, Jinja2 template system is used to render html for query page.
+The template .html ca be configured in the YAML config or disabled altogether.
+
+For archival content, pywb supports either transparent replay which streams archival content unaltered, or a pluggable *RewritingReplayView* which supports url rewriting.
+
+### Url Rewriting
+
+However, the main reason for pywb existence is to facilitate proper rewriting of archived content so that it may be rendered from a different url then it was originally captured.
+
+As such, pywb comes with a standard *HeaderRewriter*, *HTMLRewriter*, *CSSRewriter*, *JSRewriter* and *XMLRewriter*.
+
+The html rewriter parses html and replaces specific instances of urls with their rewritten versions, delegating to the CSS/JS/XML rewriters to handle domain specific content. Content is rewritten based on the `Content-Type` stored in the archived record.
+
+The CSS/JS/XML rewriters are currently regex based.
+
+#### HTML Inserts
+
+The *RewritingReplayView* also supports a custom html template which is inserted into the `<head>` element of a page. The insert may generated a banner or trigger other client side rewriting.
+
+#### Other processing
+
+The html rewriter also rewriters headers via the `HeaderRewriter` to ensure redirects are properly handled.
+Gzipped and chunked content is normalized, and `chardet` library is used to determine charset before parsing.
+
+#### Customization/Domain Specific Rewriting
+
+To properly render difficult/dynamic sites, rewriting may need to be customized on a domain specific level.
+The HTML, CSS, JS, XML can be replaced in a custom rewriting view.
+
+---
+
+If successful, the rewritten response is returned via a `WbResponse` object back up the chain to the WSGI callback. Any errors are reported to the user.
