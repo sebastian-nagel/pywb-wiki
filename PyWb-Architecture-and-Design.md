@@ -1,5 +1,9 @@
 The following is a brief overview of different components of pywb to date.
 
+### PyWb Outline
+
+![pywb architecture diag](https://archive.org/~ilya/pywb_arch_diag.png)
+
 ### Config Loading/Bootstrap
 
 pywb contains a pluggable module for initializes the WSGI app.
@@ -29,13 +33,21 @@ A proxy-based router will soon be added which will route HTTP proxy request to p
 Before data can be read from an archive, it is necessary to look up the source in an index.
 The index contains a mapping from url to archived content file and offset/length.
 
-pywb supports the CDX index format, and contains a *LocalCDXServer* component for searching and filtering cdx files.
+pywb currently supports the CDX format, which is a plain text format where each capture is represent by a multi line field.
+
+pywb can connect via HTTP to a *RemoteCDXServer* which returns a stream of filtered CDX lines for a given query. This allows for pywb to run on a machine separate from the index, provided the index is accessible via a cdx server.
+
+#### CDX Server
+
+pywb contains a full CDX server *LocalCDXServer* which can search, sort, filter and query CDX files locally stored and return a stream of cdx text lines to pywb.
 
 This component is more general than requirements of pywb and will probably be moved to a subpackage to allow standalone use as a WSGI app.
 
-pywb can also connect via HTTP to a *RemoteCDXServer* which returns a stream of filtered cdx response for a given query.
 
-This allows for pywb to run in a WSGI container without a local index, provided the index is accessible via a cdx server.
+#### Exclusions
+
+pywb will eventually support a system for filtering out cdxs from the index based on specified list or other criteria. Filtered out urls will not be available for replay.
+
 
 ### ARC/WARC Reading
 
