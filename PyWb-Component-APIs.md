@@ -7,7 +7,7 @@ The following is an overview of the APIs expose by each package.
 This package provides access to reading the cdx index from a variety of sources via a CDX server.
 The CDX Server supports the following api:
 
-`CDXServer.load_cdx(**params)`
+`CDXServer.load_cdx(self, **params)`
 
 The params dictionary contains a parameters for the cdx query
 (currently a subset of CDX API listed here:
