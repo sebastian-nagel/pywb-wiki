@@ -40,7 +40,7 @@ In the case of non-revisit records, the last 3 fields are just blank, eg. '- - -
 
 Even though ARC files can not have revisit records themselves, it is possible for an ARC record to be referenced as the original record.
 
-The implementation of **resolve_revisits=True** and other cdx operations can be found in [cdxserve.py][1]
+The implementation of **resolve_revisits=True** and other cdx operations can be found in [cdxops.py][1]
 
 ## How pywb Resolves Records
 
@@ -78,5 +78,5 @@ Some other special cases involving revisits are as follows:
 
 If either the payload or headers records could not be resolved, the replay will fail.
 
-[1]: ../blob/master/pywb/cdxserve.py
-[2]: ../blob/master/pywb/replay.py
+[1]: ../blob/master/pywb/cdx/cdxops.py
+[2]: ../blob/master/pywb/warc/resolvingloader.py
