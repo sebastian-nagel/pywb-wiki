@@ -29,7 +29,7 @@ The load() functions returns a WARC/ARC record header header and a read stream t
 
 This package also provides a higher level API for interpreting a cdx line and returning the archived HTTP content.
 
-The [ResolvingLoader class][2] provides the following interface:
+[resolvingloader.py][2] provides the following interface:
 
 `ResolvingLoader.resolve_headers_and_payload(self, cdx, failed_files)`
 
@@ -55,5 +55,5 @@ The headers and iterator are ready to be sent as part of a WSGI response.
 
 
 [1]: ../blob/master/pywb/cdx/cdxobject.py
-[2]: ../blog/master/pywb/warc/resolvingloader.py
-[3]: ../blog/master/pywb/rewrite/rewrite_content.py
+[2]: ../blob/master/pywb/warc/resolvingloader.py
+[3]: ../blob/master/pywb/rewrite/rewrite_content.py
