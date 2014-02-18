@@ -22,7 +22,7 @@ The [cdx object][1] is a dictionary containing available cdx fields.
 This package provides facilities for loading archived content from ARC and WARC files.
 First, It provides a low level api for loading one record at a time, given a full URI and an offset and length.
 
-`ArcWarcRecordLoader.load(uri, offset, length)`
+`ArcWarcRecordLoader.load(self, uri, offset, length)`
 
 The URI must be a full local, file:// or http:// identifier.
 The load() functions returns a WARC/ARC record header header and a read stream to continue reading.
