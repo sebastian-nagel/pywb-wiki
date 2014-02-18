@@ -14,8 +14,11 @@ The params dictionary contains a parameters for the cdx query
 https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server)
 
 The function returns an iterator of cdx objects, or plain text cdx stream.
-The [cdx object](pywb/cdx/cdxobject.py) is a dictionary containing available cdx fields.
+The [cdx object][1] is a dictionary containing available cdx fields.
 
 
 #### pywb.warc
 
+
+
+[1]: ../blob/master/pywb/cdx/cdxobject.py
