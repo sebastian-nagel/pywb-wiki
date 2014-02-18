@@ -41,8 +41,9 @@ ResolvingLoader is initialized with an instance of `CDXServer` to allow for addi
 #### pywb.rewrite
 
 The rewrite package deals with content rewriting necessary to replay archival content.
+It provides rewriters for HTML, CSS, JS, XML and http headers based on custom rules and a page specific url rewriter. The url rewriter is used to convert urls to be relative to a given archived page.
 
-Currently, it provides the following main interface:
+Currently, it provides the following main interface via [rewrite_content.py][3]
 
 `RewriteContent.rewrite_content(self, urlrewriter, headers, stream, head_insert_str = None):`
 
@@ -55,3 +56,4 @@ The headers and iterator are ready to be sent as part of a WSGI response.
 
 [1]: ../blob/master/pywb/cdx/cdxobject.py
 [2]: ../blog/master/pywb/warc/resolvingloader.py
+[3]: ../blog/master/pywb/rewrite/rewrite_content.py
