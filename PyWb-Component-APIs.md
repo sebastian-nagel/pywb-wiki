@@ -33,7 +33,7 @@ This package also provides a higher level API for interpreting a cdx line and re
 
 `ResolvingLoader.resolve_headers_and_payload(self, cdx, failed_files)`
 
-This function takes a cdx object from the cdx server (and an optional failed_files list to store failed attempts) and returns an http headers object + content stream pair, resolving any revisit records, as explained in PyWb-Record-Lookup-and-Revisits.
+This function takes a cdx object from the cdx server (and an optional `failed_files` list to store failed attempts) and returns an http headers object + content stream pair, resolving any revisit records, as explained in [PyWb-Record-Lookup-and-Revisits](PyWb-Record-Lookup-and-Revisits).
 
 ResolvingLoader is initialized with an instance of `CDXServer` to allow for additional cdx lookups necessary for revisit lookup.
 
