@@ -47,7 +47,7 @@ The implementation of **resolve_revisits=True** and other cdx operations can be 
 pywb can consume the 14-field records as explained above, and performs the following checks.
 It is designed to support the widest variety of warc revisit patterns.
 
-(The below cases correspond to the logic listed in [replay.py][2])
+(The below cases correspond to the logic listed in `resolve_headers_and_payload` function in [resolvingloader.py][2])
 
 **Case 2:**  Regular (ARC or WARC) record. The original record fields are an empty '-'. The http headers and payload are replayed from the same record.
 
@@ -79,4 +79,4 @@ Some other special cases involving revisits are as follows:
 If either the payload or headers records could not be resolved, the replay will fail.
 
 [1]: ../blob/master/pywb/cdx/cdxops.py
-[2]: ../blob/master/pywb/warc/resolvingloader.py
+[2]: ../blob/master/pywb/warc/resolvingloader.py#L15
