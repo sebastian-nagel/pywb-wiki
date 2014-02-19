@@ -48,7 +48,7 @@ Currently, it provides the following main interface via [rewrite_content.py][3]
 `RewriteContent.rewrite_content(self, urlrewriter, headers, stream, head_insert_str = None):`
 
 The rewrite_content() function rewrites the http headers and consumes the input stream.
-An optional string to be inserted into the <head> for html content may be specified.
+An optional string to be inserted into the `<head>` for html content may be specified.
 
 The function returns a pair of rewritten headers and an iterator of rewritten content.
 The headers and iterator are ready to be sent as part of a WSGI response.
