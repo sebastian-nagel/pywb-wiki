@@ -1,5 +1,3 @@
-##  PyWb Configuration
-
 This page explains how to configure pywb wayback to run with your WARC and ARC files.
 
 PyWb requires the creation of sorted index files, called 'cdx' files, in order to search through the archives. It should be possible to run pywb with existing cdx filee, although creating new SURT ordered cdx is recommended for more flexibility.
