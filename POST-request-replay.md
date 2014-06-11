@@ -6,15 +6,17 @@ With upcoming version 0.4.1, pywb improved POST request replay for all *applicat
 
 This ``-p`` option in ``cdx-indexer`` will enable this functionality.
 
-In this way, the POST data will be treated the same way as if it were a GET query.
+In this way, the POST data will be treated no differently than a GET query.
 
 For example, a POST request:
 
 ```
+WARC/1.0
+WARC-Type: request
 WARC-Target-Uri: http://example.com/path/post?a=b&goo=baz
 ...
 
-POST /path/post?a=b&goo=baz
+POST /path/post?a=b&goo=baz HTTP/1.0
 ...
 Content-Type: application/x-www-form-urlencoded
 ...
