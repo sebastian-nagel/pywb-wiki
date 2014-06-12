@@ -31,6 +31,6 @@ This will allow pywb to handle incoming POST requests, read the POST body and se
 
 Fuzzy matching rules can then be applied on the final url, including POST data, and may often be needed to map POST requests to actual archived data.
 
-pywb will also use **307** instead of **302** when issuing any timestamp related redirects, to ensure the POST request is preserved.
+pywb will also not issue redirects for POST requests, as 302 will lose the POST data, and 307 (the correct status to use) will result in a modal dialog in certain browsers (eg. Firefox).
 
 (This change applies only to application/x-www-form-urlencoded POST data -- other POST data, or other http verbs, are not currently supported in this way).
