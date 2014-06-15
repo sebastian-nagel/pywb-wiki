@@ -2,7 +2,7 @@ Proper replay of HTTP POST requests has been problematic in wayback and pywb. Wh
 
 The main issue with POST requests is in the lookup phase -- the POST body is usually lost during the CDX indexing process (which uses the request URI only as the index key), making it impossible to match a POST request to a proper response.
 
-With upcoming version 0.4.1, pywb improved POST request replay for all *application/x-www-form-urlencoded* POST requests will now be possible. The main approach is to match adjacent WARC *response* (or *revisit*) and *request* records and for any POST request, extract the POST data and include it as part of the key in the CDX index.
+Starting with version 0.4.5, pywb improved POST request replay for all *application/x-www-form-urlencoded* POST requests will now be possible. The main approach is to match adjacent WARC *response* (or *revisit*) and *request* records and for any POST request, extract the POST data and include it as part of the key in the CDX index.
 
 This ``-p`` option in ``cdx-indexer`` will enable this functionality.
 
