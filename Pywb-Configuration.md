@@ -81,7 +81,7 @@ The directions are for running in a shell:
 
    ```
    export LC_ALL=C
-   sort -m mypath/cdx/*.cdx | sort -c > mypath/merged_cdx/merge_1.cdx
+   sort -m mypath/cdx/*.cdx > mypath/merged_cdx/merge_1.cdx
    ```
 
    (The merged cdx will start with several ` CDX` headers due to the merge. These headers indicate the cdx format and should be all the same!
