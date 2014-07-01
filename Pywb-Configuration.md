@@ -16,8 +16,33 @@ Non-SURT ordered cdx indexs will work as well, but be sure to specify:
 
 `surt_ordered: False` in the [config.yaml](../blob/master/config.yaml)
 
+### Creating CDX from WARCs (or ARCs)
 
-### Creating CDX from WARCs
+pywb (from version 0.2.x) includes its a command-line tool for generating cdx files,
+to use run `cdx-indexer` after installing pywb.
+
+To create a single sorted index `mypath/cdx/mywarc.cdx` from a single warc `mypath/warcs/mywarc.gz` run:
+`cdx-indexer -s mypath/cdx/mywarc.cdx mypath/warcs/mywarc.gz`
+
+To index a full directory of warcs, and merge the cdx into a single index, run:
+`cdx-indexer -s mypath/cdx/all.cdx mypath/warcs/`
+
+
+* The default output uses SURT key ordered cdx files (as explained), but the `-u` flag is used to output non-surt ordered cdx. If using `-u`, set `surt_ordered: False`
+
+* The default output is not sorted, but the `-s` flag is used to have the `cdx-indexer` output a sorted cdx. For use with pywb, sorted cdxs are necessary.
+
+* For very large warcs, or lots of warcs in a directory, it may be desirable to use the system sort command instead of `-s` to do the sorting. `cdx-indexer` can be used to generate the unsorted cdx to stdout and then
+piped to system sort command:
+
+* ```
+  export LC_ALL=C
+  cdx-indexer mypath/lots_of_warcs/ | sort > mypath/cdx/all.cdx
+  ```
+
+### Old Way -- Creating CDX from WARCs
+
+**This is an older way to create cdxs, left here for reference. pywb now includes its own cdx indexer which removes much of this complexity and is explained above**
 
 If you have warc files without cdxs, the following steps can be taken to create the indexs.
 
