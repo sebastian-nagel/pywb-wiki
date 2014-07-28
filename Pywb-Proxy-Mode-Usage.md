@@ -12,7 +12,7 @@ For example, if pywb is running on *http://localhost:8080/*, set the browser to 
 
 # HTTPS Proxy Mode Support
 
-**Currently available only in https-proxy branch**
+**Currently available only in https-proxy branch: https://github.com/ikreymer/pywb/tree/https-proxy**
 
 To also enable proxy mode with https support, ensure the following is present in the config:
 
@@ -71,4 +71,34 @@ GET /
 The proxy handler in pywb reads the CONNECT request and unwraps the underlying request in a SSL/TLS tunnel.
 The SSL tunnel is created by using an on-the-fly generated certificate signed for the host (stored in `certs_dir`), signed with the specified `root_ca_file`
 
+# Collection Selection
 
+In archival mode, a replay collection can be selected simply altering the path, eg:
+*/A/http://example.com* or */B/http://example.com* can be used to view contents of *http://example.com/*
+in collections A or B, respectively.
+
+In proxy mode, the collection needs to be specified in different ways. Obviously, this only applies if there is more than one collection being used in pywb.
+
+When multiple collections are involved, it is possible to specify a default collection:
+
+```
+collections:
+    coll_A: ...
+    coll_B: ...
+
+proxy_options:
+   ...
+   use_default_coll: coll_B
+```
+
+This will ensure that proxy requests default to `coll_B` unless a collection has been specified in another way.
+
+## Proxy Auth Selection
+
+One way to specify the collection is to overload the Proxy-Authentication feature, which provides a consistent user-supplied username/password that is set with each proxy request.
+
+If there is no default collection, or `use_default_coll: false` is set, the first request to a proxy resource results in a 407 Proxy Authentication required message, requesting the user to enter a username/password.
+The username is the collection name, eg: coll_A or coll_B and the password is ignored.
+Once set, the user will not be asked again for the collection for the remainder of the session.
+
+TODO: Add explicit way of switching collections when needed.
