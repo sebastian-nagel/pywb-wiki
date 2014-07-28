@@ -12,7 +12,7 @@ For example, if pywb is running on *http://localhost:8080/*, set the browser to 
 
 # HTTPS Proxy Mode Support
 
-** Currently available only in https-proxy branch **
+**Currently available only in https-proxy branch**
 
 To also enable proxy mode with https support, ensure the following is present in the config:
 
