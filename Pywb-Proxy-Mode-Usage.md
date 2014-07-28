@@ -99,6 +99,6 @@ One way to specify the collection is to overload the Proxy-Authentication featur
 
 If there is no default collection, or `use_default_coll: false` is set, the first request to a proxy resource results in a 407 Proxy Authentication required message, requesting the user to enter a username/password.
 The username is the collection name, eg: coll_A or coll_B and the password is ignored.
-Once set, the user will not be asked again for the collection for the remainder of the session.
+Once set, the user will not be asked again for the collection for the remainder of the session,and should work for both http and https requests (if enabled).
 
 TODO: Add explicit way of switching collections when needed.
