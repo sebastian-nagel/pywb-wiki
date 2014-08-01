@@ -93,12 +93,25 @@ proxy_options:
 
 This will ensure that proxy requests default to `coll_B` unless a collection has been specified in another way.
 
+## Cookie/Session Selection
+
+The 'ideal' way to specify the collection is via some user setting, e.g. a cookie.
+However, a cookie can not be shared across multiple domains in proxy mode (there is no proxy-cookie, unfortunately), so the cookie must somehow be passed to each domain.
+
+This can be accomplished through the use of a magic proxy host, like `pywb.proxy` and have the cookie be propagated to individual hosts via series of redirects.
+
+To allow changing the collection, it turns out the collection itself can not be stored in the cookie, but an indirect session id is required. The downside is that this requires some state on the server.
+
+The request may be set as follows: `http://example.com` -> `select.pywb.proxy/http://example.com` -> user makes selection collA-> `collA-set.pywb.proxy/http://example.com/` -> `seshId-sethost.pywb.proxy.example.com/` -> http://example.com/ (with seshId cookie which resolves to collA)
+
+TODO: improve explanation.
+
 ## Proxy Auth Selection
 
-One way to specify the collection is to overload the Proxy-Authentication feature, which provides a consistent user-supplied username/password that is set with each proxy request.
+Another way to specify the collection is to overload the Proxy-Authentication feature, which provides a consistent user-supplied username/password that is set with each proxy request.
 
 If there is no default collection, or `use_default_coll: false` is set, the first request to a proxy resource results in a 407 Proxy Authentication required message, requesting the user to enter a username/password.
 The username is the collection name, eg: coll_A or coll_B and the password is ignored.
 Once set, the user will not be asked again for the collection for the remainder of the session,and should work for both http and https requests (if enabled).
 
-TODO: Add explicit way of switching collections when needed.
+The main downside of Proxy-Auth is that switching collection requires going through reauthentication, which requires an ugly browser popup window -- there is no way to change collections via link for instance.
