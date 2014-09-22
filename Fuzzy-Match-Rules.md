@@ -42,7 +42,7 @@ Since the groups match, this url is considered a match and the first matching cd
 Note that the url prefix `com,example)/ajax/complexquery?` need not be specified as part of the regex, since its already guaranteed to match.
 
 
-### Multiple params
+### Matching Multiple Query Params
 
 Multiple capture groups can be used to match against multiple individual params, for example, if we wanted to match both `id` and `foo`, the fuzzy match rule could be:
 ```yaml
