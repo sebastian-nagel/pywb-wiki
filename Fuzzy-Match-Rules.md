@@ -6,13 +6,16 @@ The match, replace and filter applied to the cdx can all be customized allowing 
 
 ### Query Param Match Rule
 
-Fuzzy matching rules are specified in [rules.yaml](../blob/master/config.yaml) and are entered per SURT prefix. A simple example might be as follows:
+Fuzzy matching rules are specified in [rules.yaml](../blob/master/config.yaml) and are entered per SURT prefix.
+
+A simple example might be as follows:
 
 ```yaml
    - url_prefix: 'com,example)/ajax/complexquery'
 
      fuzzy_lookup: '([?&]id=[^&]+)'
 ```
+(Note: when running with non-SURT cdx indexes, the rules are automatically converted to non-SURT form and should generally work unless there are subdomain wildcards in the url_prefix)
 
 Suppose a capture exists for:
 ```
@@ -79,7 +82,9 @@ There can only be a single `fuzzy_lookup` entry per `url_prefix`, however there 
 
 ### More Complex Use Cases
 
-Currently, the most common form of
+(Note: these notation may change in the future)
+
+Currently, the most common form of:
 
 ```yaml
    fuzzy_lookup: <regex>
@@ -98,7 +103,7 @@ The `filter` param is used to specify how to cdx server filter param, with `~url
 
 The `replace` param indicates the last token to replace for prefix search. Setting it to `?` indicates that the query string on will be truncated.
 
-One example which uses this extended syntax is the the followng catch-all rule for removing *_=timestamp* or *uncache=timestamp* params:
+One example which uses this extended syntax is the the following catch-all rule for removing `_=timestamp` or `uncache=timestamp` params:
 
 ```yaml
     - url_prefix: ''
@@ -110,4 +115,4 @@ One example which uses this extended syntax is the the followng catch-all rule f
 
 The extended form is used to change the filter to `=urlkey:{0}` from `~urlkey:{0}` to indicate an exact instead of a prefix match.
 This notation is undergoing review and may change in a future version.
-(Any such changes will be documented here and in the change list).
+Any such changes will be documented here and in the changelist.
