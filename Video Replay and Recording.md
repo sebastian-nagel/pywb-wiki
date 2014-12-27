@@ -70,21 +70,24 @@ The client side `vidrw.js` handler includes support for YouTube native HTML5 pla
 ## Choosing a player (experimental)
 
 The below options are very experimental and subject to change.
-By adding the following anchor *#_pywbvid=<type>*, it is possible to explicitly select which player will be used by the client side video library. These are most useful for recording, although it is often possible to record with html player and then replay with the flash player.
+By adding the following anchor *#_pywbvid=type*, it is possible to explicitly select which player will be used by the client side video library. These are most useful for recording, although it is often possible to record with html player and then replay with the flash player.
 
-By default, the best possible player is chosen.
+When not specified, the players are tried in this order of preference: first the original HTML5 player (YouTube only), then the native browser HTML5, and then FlowPlayer Flash, if all else has failed.
 
-Ex: *http://localhost:8080/live/http://example.com/#_pywbvid=html*
-    *http://localhost:8080/replay/http://example.com/#_pywbvid=flash*
+Ex: 
+```
+http://localhost:8080/live/http://example.com/#_pywbvid=html
+http://localhost:8080/replay/http://example.com/#_pywbvid=flash
+```
 
-### `_pywbvid=orig`
+#### `_pywbvid=orig`
 
 Currently only makes sense with Youtube and will prefer the youtube HTML5 player when possible. It will attempt to replace a youtube flash player with youtube HTML5 player, instead of with the default player.
 
-### `_pywbvid=html`
+#### `_pywbvid=html`
 
 Mostly for use with YouTube. It will force the native browser HTML5 player over the custom YouTube player when possible.
 
-### `_pywbvid=flash`
+#### `_pywbvid=flash`
 
 This option will prefer the FlowPlayer flash player to be used instead of the original YouTube or native HTML5 players.
