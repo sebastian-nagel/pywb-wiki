@@ -51,7 +51,7 @@ Multiple capture groups can be used to match against multiple individual params,
 
 Note: the params are canonicalized in alphabetical order, so should be specified this way in the regex.
 
-### Simplified Query Match Rulse (from 0.6.1)
+### Simplified Query Match Rules (from 0.6.1)
 
 Most of the fuzzy matching involves query params, pywb 0.6.1 introduces a simplified notation, using a list of query params:
 
@@ -80,9 +80,30 @@ There can only be a single `fuzzy_lookup` entry per `url_prefix`, however there 
 
 ```
 
-### More Complex Use Cases
+### Query Match with Regex (from 0.7.0)
 
-(Note: these notation may change in the future)
+Sometimes having just a static `url_prefix` or multiple prefixes and the query args is not quite sufficient. It is useful to be able to specify a custom regex for the non-query part of the url.
+This can now be done as follows:
+
+```yaml
+
+   url_prefix: 'com,example,'
+
+   fuzzy_lookup:
+       match:
+           regex: 'com,example,.*\)/path/endpoint'
+           args:
+               - foo
+               - id
+```
+
+This is equivalent to the following:
+
+```yaml
+   fuzzy_lookup: 'com,example,.*\)/path/endpoint([?&]foo=[^&]+).*([?&]id=[^&]+)'
+```
+
+### Other Complex Use Cases
 
 Currently, the most common form of:
 
