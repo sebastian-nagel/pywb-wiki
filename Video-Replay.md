@@ -38,6 +38,14 @@ The returned JSON is returned directly with the content type `application/vnd.yo
 and allows the client to choose from multiple formats. The `vidrw.js` library includes logic to check each available format and pick the best one that is supported by the browser natively (HTML5 replay).
 If no supported format could be found, pywb then loads an included version of FlowPlayer and attempts to play back the video with FlowPlayer.
 
+When live proxying/recording, the youtube-dl info is created live.
+
+When replaying from the archive, the youtube-dl info is looked up in the WARC file.
+When using pywb-webrecorder, this happens automatically.
+For legacy videos/videos not recorded via pywb-webrecorder/warcprox, it may be necessary to generate
+the video info file to map the video container to the actual video. This is beyond the scope of this first release.
+
+
 ## Recording with live proxy and pywb-webrecorder
 
 When running with pywb-webrecorder, the live rewrite with proxy mode is used, and the proxy
@@ -50,3 +58,33 @@ and so extra logic exists to ensure that videos are recorded as best as possible
 
 * Video info is automatically created (if any) for a url the first time a range request is used.
 
+* Multiple `range=` argument requests treated as range requests (see below).
+
+## Youtube and DASH Support
+
+YouTube's HTML5 player uses DASH, which uses regular requests with a `range=` query argument instead of
+HTTP 1.1 Range header. pywb includes a special case where it looks for the `range=` argument in addition to the Range header and treats both the same way. Multiple `range=` arguments are not sent to the proxy, for instance.
+
+The client side `vidrw.js` handler includes support for YouTube native HTML5 player replay, and provides additional handling for replacing native youtube player with either HTML5 or flash player.
+
+## Choosing a player (experimental)
+
+The below options are very experimental and subject to change.
+By adding the following anchor *#_pywbvid=<type>*, it is possible to explicitly select which player will be used by the client side video library. These are most useful for recording, although it is often possible to record with html player and then replay with the flash player.
+
+By default, the best possible player is chosen.
+
+Ex: *http://localhost:8080/live/http://example.com/#_pywbvid=html*
+    *http://localhost:8080/replay/http://example.com/#_pywbvid=flash*
+
+### `_pywbvid=orig`
+
+Currently only makes sense with Youtube and will prefer the youtube HTML5 player when possible. It will attempt to replace a youtube flash player with youtube HTML5 player, instead of with the default player.
+
+### `_pywbvid=html`
+
+Mostly for use with YouTube. It will force the native browser HTML5 player over the custom YouTube player when possible.
+
+### `_pywbvid=flash`
+
+This option will prefer the FlowPlayer flash player to be used instead of the original YouTube or native HTML5 players.
