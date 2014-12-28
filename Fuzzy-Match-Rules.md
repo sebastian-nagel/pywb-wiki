@@ -91,7 +91,7 @@ This can now be done as follows:
 
    fuzzy_lookup:
        match:
-           regex: 'com,example,.*\)/path/endpoint'
+           regex: 'com,example,.*\)/path/endpoint.*'
            args:
                - foo
                - id
@@ -100,7 +100,7 @@ This can now be done as follows:
 This is equivalent to the following:
 
 ```yaml
-   fuzzy_lookup: 'com,example,.*\)/path/endpoint([?&]foo=[^&]+).*([?&]id=[^&]+)'
+   fuzzy_lookup: 'com,example,.*\)/path/endpoint.*([?&]foo=[^&]+).*([?&]id=[^&]+)'
 ```
 
 ### Other Complex Use Cases
