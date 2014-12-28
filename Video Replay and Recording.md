@@ -1,6 +1,6 @@
 With release 0.7.0, pywb features extensive support for video (and audio) replay from archives and and via the live proxy. Using pywb-webrecorder allows for live proxy recording of video/audio which can then be played back from any WARC file.
 
-*Note: This is the first release of video support, and some of these features will likely undergo significant improvement in the future. Feel free to open issues if there are any questions about how any of this works.*
+*Note: This is the first release of video support, and some of these features will likely undergo significant improvement in the future. Feel free to open issues if there are any questions about how any of this works. At this time, video replay works best in Chrome followed by Firefox. It has not yet been thoroughly tested on other platforms*
 
 ## HTML5
 
