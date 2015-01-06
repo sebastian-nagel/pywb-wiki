@@ -1,3 +1,7 @@
+* [[Intro and Usage|#intro-and-usage]]
+
+
+
 # Intro and Usage
 
 With release 0.7.0, pywb features extensive support for video (and audio) replay from web archive files as well via live rewrite proxy. Combining the live proxy support with [pywb-webrecorder](github.com/ikreymer/pywb-webrecorder) allows for live recording of video/audio which can then be played back from the archive.
@@ -24,7 +28,7 @@ In order to support a wide variety of sites, pywb uses several methods to attemp
 
 There are several ways to play around with the video recording and replay features.
 
-### WebRecorder.io
+#### WebRecorder.io
 
 The easiest way to test out the new features is to use the WebRecorder.io service which is based on pywb.
 
@@ -63,11 +67,6 @@ By adding the following anchor *#_pywbvid=type*, it is possible to explicitly se
 
 When not specified, the players are tried in this order of preference: first the original HTML5 player (currently available for YouTube only), then the native browser HTML5, and then FlowPlayer Flash, if all else has failed.
 
-Ex: 
-```
-https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE#_pywbvid=html
-https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE#_pywbvid=flash
-```
 
 #### `_pywbvid=orig`
 
@@ -158,6 +157,10 @@ and so extra logic exists to ensure that videos are recorded as best as possible
 
 #### Youtube and DASH Support (0.7.2 update)
 
-YouTube's HTML5 player uses DASH by default, which uses regular requests with a `range=` query argument instead of HTTP 1.1 Range header. pywb 0.7.0 includes a special case where it looks for the `range=` argument in addition to the Range header and treats both the same way. Multiple `range=` arguments are not sent to the proxy, for instance.
+The YouTube HTML5 player uses DASH (http://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP) by default, which uses HTTP requests with a `range=` query argument instead of HTTP 1.1 Range header.
 
-Although DASH recording and replay is supported, it may change from browser to browser, and so with version 0.7.2, pywb ensures that the DASH replay is actually disabled in the YouTube player to ensure maximum compatibility.
+pywb 0.7.0 initially included special case support for DASH, where it looks for the `range=` argument in addition to the Range header and treats both the same way. (Multiple `range=` arguments are not sent to the proxy, for instance).
+
+Although DASH recording and replay is still supported, replay was not consistent from browser to browser as video stream  (due to the nature of the protocol).
+
+With version 0.7.2, pywb ensures that the DASH replay is actually disabled in the YouTube player to ensure maximum compatibility. DASH support may be added as an option in future versions.
