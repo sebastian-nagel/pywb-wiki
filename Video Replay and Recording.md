@@ -1,4 +1,12 @@
-* [[Intro and Usage|#intro-and-usage]]
+* [Intro and Usage](#intro-and-usage)
+* [Supported Sites](#supported-sites)
+* [How It Works](#how-it-works)
+* [Testing Video](#testing-video)
+   - [WebRecorder.io](#webrecorder-io)
+   - [pywb-webrecorder](#pywb-webrecorder)
+   - [pywb Live Proxy](#pywb-live-proxy)
+* [Choosing Player Type](#choosing-player-type)
+* [Implementation Details](#implementation-details)
 
 
 
@@ -41,7 +49,7 @@ https://webrecorder.io/replay/https://www.youtube.com/watch?v=_MgzgwOfNOE
 or simply preview without recording via:
 https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE
 
-#### Recording with pywb-webrecorder
+#### pywb-webrecorder
 
 If you'd like to record a video locally, you may run the [pywb-webrecorder](github.com/ikreymer/pywb-webrecorder) application to record a video via live proxy. Refer to [pywb-webrecorder](github.com/ikreymer/pywb-webrecorder) documentation for more info on setting up this app.
 
@@ -59,9 +67,9 @@ you will see `Still Downloading...` messages in the log.
 To see the video rewrite directly without any other tools, you can run the `live-rewrite-server` provided with pywb. Then, point a browser to `http://localhost:8090/rewrite/https://www.youtube.com/watch?v=_MgzgwOfNOE` (This sample app simply proxies the live web through the pywb rewriting system).
 This may be useful for testing if a video will work, as the other tools are built on top of the same system.
 
-## Choosing a player
+## Choosing Player Type
 
-*Note: The below options are very experimental and subject to change, as of pywb 0.7.2*
+*Note: The below options are still experimental and subject to change as of pywb 0.7.2*
 
 By adding the following anchor *#_pywbvid=type*, it is possible to explicitly select which player will be used by the client side video library. These are most useful for recording, although it is often possible to record with html player and then replay with the flash player.
 
