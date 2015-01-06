@@ -1,8 +1,10 @@
+#### Table of Contents
+
 * [Intro and Usage](#intro-and-usage)
 * [Supported Sites](#supported-sites)
 * [How It Works](#how-it-works)
 * [Testing Video](#testing-video)
-   - [WebRecorder.io](#webrecorder-io)
+   - [WebRecorder.io](#webrecorderio)
    - [pywb-webrecorder](#pywb-webrecorder)
    - [pywb Live Proxy](#pywb-live-proxy)
 * [Choosing Player Type](#choosing-player-type)
