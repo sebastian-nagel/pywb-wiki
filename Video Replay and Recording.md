@@ -8,6 +8,9 @@
    - [pywb-webrecorder](#pywb-webrecorder)
    - [pywb Live Proxy](#pywb-live-proxy)
 * [Choosing Player Type](#choosing-player-type)
+   - [_pywbvid=orig](#_pywbvidorig)
+   - [_pywbvid=html](#_pywbvidhtml)
+   - [_pywbvid=flash](#_pywbvidflash)
 * [Implementation Details](#implementation-details)
 
 
