@@ -1,6 +1,100 @@
-With release 0.7.0, pywb features extensive support for video (and audio) replay from archives and and via the live proxy. Using pywb-webrecorder allows for live proxy recording of video/audio which can then be played back from any WARC file.
+# Intro and Usage
 
-*Note: This is the first release of video support, and some of these features will likely undergo significant improvement in the future. Feel free to open issues if there are any questions about how any of this works. At this time, video replay works best in Chrome followed by Firefox. It has not yet been thoroughly tested on other platforms*
+With release 0.7.0, pywb features extensive support for video (and audio) replay from web archive files as well via live rewrite proxy. Combining the live proxy support with [pywb-webrecorder](github.com/ikreymer/pywb-webrecorder) allows for live recording of video/audio which can then be played back from the archive.
+
+At this time, the replay is designed to work well with video and audio recorded via live proxy. Due to the complexity of video archiving, additional preparation may be needed to replay video and audio recorded via other methods. Video recording and replay work best in Chrome, followed by Firefox, tested on Linux and OS X. Other browsers have not been tested at this time, though browsers supporting HTML 5 should work.
+
+### Supported Sites
+
+In order to support a wide variety of sites, pywb uses several methods to attempt to properly replay video.
+
+* Any plain HTML5 video should work as the HTML `src=` attributes are rewritten similar to other HTML content.
+
+* For flash based videos, any site [supported by youtube-dl](http://rg3.github.io/youtube-dl/supportedsites.html) should work. pywb uses the excellent [youtube-dl](http://rg3.github.io/youtube-dl/) project to detect and download videos that are not plain HTML.
+
+## How it Works
+
+* In general case, pywb will attempt to replace any flash based with equivalent HTML5 replay.
+
+* If that fails (or HTML5 is not supported), the flash version of [FlowPlayer](https://flowplayer.org/) is used to attempt to play back the video stream.
+
+* For certain common video sites, an attempt is made to use the original HTML5 player. Currently this applies only to YouTube, but other common video sites may be added in the future. If the original player playback fails, either the HTML5 or FlowPlayer option is tried.
+
+## Testing Video
+
+There are several ways to play around with the video recording and replay features.
+
+### WebRecorder.io
+
+The easiest way to test out the new features is to use the WebRecorder.io service which is based on pywb.
+
+For instance, you may record a video by visiting:
+https://webrecorder.io/record/https://www.youtube.com/watch?v=_MgzgwOfNOE
+
+and then play it back by visiting:
+https://webrecorder.io/replay/https://www.youtube.com/watch?v=_MgzgwOfNOE
+
+or simply preview without recording via:
+https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE
+
+#### Recording with pywb-webrecorder
+
+If you'd like to record a video locally, you may run the [pywb-webrecorder](github.com/ikreymer/pywb-webrecorder) application to record a video via live proxy. Refer to [pywb-webrecorder](github.com/ikreymer/pywb-webrecorder) documentation for more info on setting up this app.
+
+Using the default settings, you can point your browser to:
+http://localhost:8080/record/https://www.youtube.com/watch?v=_MgzgwOfNOE
+
+Then point, your browser to:
+http://localhost:8080/replay/https://www.youtube.com/watch?v=_MgzgwOfNOE
+
+to play back the video. Note: recording the video may take some time. If the video is still recording,
+you will see `Still Downloading...` messages in the log.
+
+#### pywb Live Proxy
+
+To see the video rewrite directly without any other tools, you can run the `live-rewrite-server` provided with pywb. Then, point a browser to `http://localhost:8090/rewrite/https://www.youtube.com/watch?v=_MgzgwOfNOE` (This sample app simply proxies the live web through the pywb rewriting system).
+This may be useful for testing if a video will work, as the other tools are built on top of the same system.
+
+## Choosing a player
+
+*Note: The below options are very experimental and subject to change, as of pywb 0.7.2*
+
+By adding the following anchor *#_pywbvid=type*, it is possible to explicitly select which player will be used by the client side video library. These are most useful for recording, although it is often possible to record with html player and then replay with the flash player.
+
+When not specified, the players are tried in this order of preference: first the original HTML5 player (currently available for YouTube only), then the native browser HTML5, and then FlowPlayer Flash, if all else has failed.
+
+Ex: 
+```
+https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE#_pywbvid=html
+https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE#_pywbvid=flash
+```
+
+#### `_pywbvid=orig`
+
+Prefer the original player. Currently available for YouTube only. This will attempt to use the YouTube HTML5 player (also default option), and even replace the YouTube flash player with YT HTML 5 player (not the default).
+
+Ex: https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE#_pywbvid=orig
+
+#### `_pywbvid=html`
+
+This will force the browser's HTML5 player. This is the default for all sites except youtube at the moment.
+
+Ex: https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE#_pywbvid=html
+
+#### `_pywbvid=flash`
+
+This option will prefer the FlowPlayer flash player to be used instead of the original or browser HTML5 player. By default, the Flash player is used only when HTML5 is not available, however this option will force this particular player.
+
+Ex: https://webrecorder.io/preview/https://www.youtube.com/watch?v=_MgzgwOfNOE#_pywbvid=flash
+
+
+This options are still experimental and may not always work. When recording with `_pywbvid=flash` or `_pywbvid=html`, it is usually not possible to play back with the original player (`_pywbvid=orig`) as that path is not recorded. However, the video will still play back with the best available player.
+These options are for advanced users and generally not necessary.
+
+
+# Implementation Details
+
+The following sections explain in more detail how the video replay system works. They will be expanded as needed.
 
 ## HTML5
 
@@ -48,7 +142,7 @@ For legacy videos/videos not recorded via pywb-webrecorder/warcprox, it may be n
 the video info file to map the video container to the actual video. This is beyond the scope of this first release.
 
 
-## Recording with live proxy and pywb-webrecorder
+## Recording with live proxy / pywb-webrecorder / webrecorder.io
 
 When running with pywb-webrecorder, the live rewrite with proxy mode is used, and the proxy
 is assumed to be 'video aware'. Both HTML5 requests and video info requests will go through the proxy,
@@ -62,34 +156,8 @@ and so extra logic exists to ensure that videos are recorded as best as possible
 
 * Multiple `range=` argument requests treated as range requests (see below).
 
-## Youtube and DASH Support
+#### Youtube and DASH Support (0.7.2 update)
 
-YouTube's HTML5 player uses DASH, which uses regular requests with a `range=` query argument instead of
-HTTP 1.1 Range header. pywb includes a special case where it looks for the `range=` argument in addition to the Range header and treats both the same way. Multiple `range=` arguments are not sent to the proxy, for instance.
+YouTube's HTML5 player uses DASH by default, which uses regular requests with a `range=` query argument instead of HTTP 1.1 Range header. pywb 0.7.0 includes a special case where it looks for the `range=` argument in addition to the Range header and treats both the same way. Multiple `range=` arguments are not sent to the proxy, for instance.
 
-The client side `vidrw.js` handler includes support for YouTube native HTML5 player replay, and provides additional handling for replacing native youtube player with either HTML5 or flash player.
-
-## Choosing a player (experimental)
-
-The below options are very experimental and subject to change.
-By adding the following anchor *#_pywbvid=type*, it is possible to explicitly select which player will be used by the client side video library. These are most useful for recording, although it is often possible to record with html player and then replay with the flash player.
-
-When not specified, the players are tried in this order of preference: first the original HTML5 player (YouTube only), then the native browser HTML5, and then FlowPlayer Flash, if all else has failed.
-
-Ex: 
-```
-http://localhost:8080/live/http://example.com/#_pywbvid=html
-http://localhost:8080/replay/http://example.com/#_pywbvid=flash
-```
-
-#### `_pywbvid=orig`
-
-Currently only makes sense with Youtube and will prefer the youtube HTML5 player when possible. It will attempt to replace a youtube flash player with youtube HTML5 player, instead of with the default player.
-
-#### `_pywbvid=html`
-
-Mostly for use with YouTube. It will force the native browser HTML5 player over the custom YouTube player when possible.
-
-#### `_pywbvid=flash`
-
-This option will prefer the FlowPlayer flash player to be used instead of the original YouTube or native HTML5 players.
+Although DASH recording and replay is supported, it may change from browser to browser, and so with version 0.7.2, pywb ensures that the DASH replay is actually disabled in the YouTube player to ensure maximum compatibility.
