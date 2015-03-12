@@ -17,9 +17,9 @@ pywb can load archives from Amazon S3 as long as they are publicly accessible. S
 
 To load WARCs from S3, you can specify the HTTP equivalent for your bucket.
 
-For instance, to load from `s3://my_sample_bucket/warcs/`, the entry could be:
+For instance, to load from `s3://my_sample_bucket/path/to/warcs/`, the entry could be:
 
-`archive_paths: https://my_sample_bucket.s3.amazonaws.com/`
+`archive_paths: https://my_sample_bucket.s3.amazonaws.com/path/to/warcs/`
 
 This should work as long as the bucket is publicly accessible.
 
