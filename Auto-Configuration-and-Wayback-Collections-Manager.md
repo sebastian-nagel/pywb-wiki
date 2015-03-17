@@ -10,7 +10,7 @@
 
 ## Introducing Auto-Configuration and Collection Manager
 
-With release 0.9.0, pywb Wayback Machine features a new 'zero-configuration' or 'convention-over-configuration' system. No config files are required and collections are loaded automatically based on designated directory structure. (Deployments with existing `config.yaml` files will continue to work, as an existing `config.yaml` will take precedence).
+With release 0.9.0, pywb Wayback Machine features a new 'auto-configuration' or 'convention-over-configuration' system. No config files are required and collections are loaded automatically based on designated directory structure. (Deployments with existing `config.yaml` files will continue to work, as an existing `config.yaml` will take precedence).
 
 pywb requires one or more collections. Each collection contains a set of archived files, indexes to archive files, and additional UI templates and static (non-archive) content (such js, css, etc...).
 
@@ -115,7 +115,7 @@ Metadata consists of `name=values` pairs and will be stored in each collection's
 The `title` metadata will also be used on the home page and collection search page.
 To add a title:
 
-```wayback-manager metadata collA --add title="My First Collection"```
+```wayback-manager metadata collA --set title="My First Collection"```
 
 To add another metadata, say description, you can run
 
