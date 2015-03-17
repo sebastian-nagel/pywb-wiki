@@ -1,12 +1,12 @@
-**Please note: this documentation is for the pywb 0.9.0 beta release.
+**Please note: this documentation is for the pywb 0.9.0 beta release.**
 
-To try, please install via `pip install pywb==0.9.0b1` 
+**To use, please install via: `pip install pywb==0.9.0b1`**
 
-Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs.
+**Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs.**
 
-Any feedback on new conventions/names introduced is especially welcome.
+**Any feedback on new conventions/names introduced is especially welcome.**
 
-Thanks!**
+**Thanks!**
 
 ## Introducing Auto-Configuration and Collection Manager
 
