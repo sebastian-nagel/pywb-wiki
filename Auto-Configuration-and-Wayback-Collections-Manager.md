@@ -85,14 +85,12 @@ The new collection now exists, so it's time to add some archive files.
 
 A collection consists of any number of archive files (WARC or ARC) format. Any number of ARC/WARC files can be added to the collection by running:
 
-```wayback-manager add <collName> <path/to/warc> <path/to/another_warc> ...
-```
+```wayback-manager add <collName> <path/to/warc> <path/to/another_warc> ...```
 
 Multiple files can added at once. For instance, if you have a directory of ARC/WARC files ready, you may add them
 at once by running:
 
-```wayback-manager add collA /path/to/warcs/*.warc.gz
-```
+```wayback-manager add collA /path/to/warcs/*.warc.gz```
 
 If you do not have any WARC files, you can use https://webrecorder.io to record any page, then download the WARC file (it will have a `.warc.gz` extension). To add this new file, you can do:
 
