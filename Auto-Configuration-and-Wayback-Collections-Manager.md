@@ -1,6 +1,6 @@
 **Please note: this documentation is for the pywb 0.9.0 beta release. Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs. Thanks!**
 
-# Introducing Auto-Configuration and Collection Manager
+## Introducing Auto-Configuration and Collection Manager
 
 With release 0.9.0, pywb Wayback Machine features a new 'zero-configuration' or 'convention-over-configuration' system. No config files are required and collections are loaded automatically based on designated directory structure. (Deployments with existing `config.yaml` files will continue to work, as an existing `config.yaml` will take precedence).
 
@@ -24,7 +24,7 @@ my_archive:
 ```
 
 
-## Wayback Collections Manager Tutorial
+## Tutorial
 
 To assist the user in setting up a new collection quickly and easily, pywb comes with a new `wayback-manager` utility. The utility can be used from the command-line to quickly create collections, add archive files (WARC/ARCS), and custom UI templates, static resources, and even user metadata.
 
