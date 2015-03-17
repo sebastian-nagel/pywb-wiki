@@ -1,4 +1,12 @@
-**Please note: this documentation is for the pywb 0.9.0 beta release. Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs. Thanks!**
+**Please note: this documentation is for the pywb 0.9.0 beta release.
+
+To try, please install via `pip install pywb==0.9.0b1` 
+
+Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs.
+
+Any feedback on new conventions/names introduced is especially welcome.
+
+Thanks!**
 
 ## Introducing Auto-Configuration and Collection Manager
 
@@ -34,7 +42,7 @@ The following brief tutorial shows how to use the new management utility.
 
 First, make sure that the latest pywb is installed -- this can be done by running:
 
-`pip install pywb` or, if you've cloned the repo, `python setup.py install`
+`pip install pywb==0.9.0b1` or, if you've cloned the repo, `python setup.py install`
 
 Once pywb is installed, it is best to start with a clean directory for your archive.
 
