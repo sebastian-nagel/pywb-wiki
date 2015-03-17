@@ -2,11 +2,14 @@ Several organizations run public services which use pywb that you may explore di
 
 * `Webenact <http://webenact.rhizome.org/excellences-and-perfections/>`_ from `rhizome.org <https://rhizome.org>`_, features artist focused social media reenactments. (Featured in `NYTimes Bits Blog <http://bits.blogs.nytimes.com/2014/10/19/a-new-tool-to-preserve-moments-on-the-internet>`_)
 
+
 * `Perma.cc <https://perma.cc>`_ embeds pywb as part of a larger `open source application <https://github.com/harvard-lil/perma>`_ to provide web archive replay for law libraries.
 
+
 * `Hypothes.is Annotations <https://via.hypothes.is>`_ uses the live rewrite feature to add `Hypothes.is <https://hypothes.is>`_ annotation editor into any page or PDF (https://github.com/hypothesis/via)
+
 
 * `WebRecorder.io <https://webrecorder.io>`_ uses pywb and builds upon pywb-webrecorder to create a hosted web recording and replay system.
 
 
-If you have another service that should be on this list, please do not hesitate to contact and it will be added!
+*If you have another service that should be on this list, please do not hesitate to contact and it will be added!*
