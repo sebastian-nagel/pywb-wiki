@@ -1,10 +1,12 @@
-## Auto-Configuration Directory Structure
+** Please note: this documentation is for the pywb 0.9.0 beta release. Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs. Thanks! **
 
-With release 0.9.0, pywb Wayback Machine features a new 'zero-configuration' or 'convention-over-configuration' system. No config files are required and collections are loaded automatically based on designated directory structure. (Configuration with existing `config.yaml` files will continue to work).
+# Introducing Auto-Configuration and Collection Manager
 
-pywb requires one more collections. Each collection contains a set of archived files, indexes to archive files, and additional UI templates and static (non-archive) content (such js, css, etc...).
+With release 0.9.0, pywb Wayback Machine features a new 'zero-configuration' or 'convention-over-configuration' system. No config files are required and collections are loaded automatically based on designated directory structure. (Deployments with existing `config.yaml` files will continue to work, as an existing `config.yaml` will take precedence).
 
-The expected directory structure for collections is as follows:
+pywb requires one or more collections. Each collection contains a set of archived files, indexes to archive files, and additional UI templates and static (non-archive) content (such js, css, etc...).
+
+If no custom `config.yaml` is present, the expected directory structure for collections is as follows:
 
 ```
 my_archive:
@@ -21,7 +23,7 @@ my_archive:
         ...
 ```
 
-## Wayback Manager
+## Wayback Collections Manager
 
 To assist the user in setting up a new collection quickly and easily, pywb comes with a new `wayback-manager` utility. The utility can be used from the command-line to quickly create collections, add archive files (WARC/ARCS), and custom UI templates, static resources, and even user metadata.
 
@@ -68,9 +70,9 @@ Collections:
   - collA
 ```
 
-The new collection exists but is still empty. 
+The new collection now exists, so it's time to add some archive files. 
 
-### Adding files to the Collection Archive
+### Adding files to the collection
 
 A collection consists of any number of archive files (WARC or ARC) format. Any number of ARC/WARC files can be added to the collection by running:
 
@@ -95,7 +97,7 @@ If you know a url in the WARC file, you can enter it in the search box to see th
 
 *Automated page listing coming soon*
 
-### Adding Metadata
+### Adding Collection Metadata
 
 The pywb Wayback Machine now also supports adding metadata data to collections.
 
@@ -115,7 +117,7 @@ Now, when you run ```wayback``` and navigate to the home page, you should see
 
 When you visit ```http://localhost:8080/collA```, you should see all the metadata listed.
 
-### Customizing UI -- Add UI Template
+### Customizing UI Templates
 
 The UI for the home page and collection search page (and most other parts of pywb) can easily be modified.
 
@@ -134,6 +136,75 @@ you can run:
 
 To change the home page, you can simply edit `templates/index.html` or replace the file completely.
 
+### Adding static files
+
+To add static files, simply copy them to the `collections/collA/static/` directory and they will be served
+by the Wayback application.
+
+For example, if you create `collections/collA/static/mycss.css`, and run `wayback`,
+you can access the css file via: `http://localhost:8080/static/collA/mycss.css`
+
+## Advanced Usage
+
+The following are some more advanced usage scenarios.
+
+### Custom Archive Directory Structure
+
+Although the collection manager adds all ARC/WARCS to the root of the `<coll name>/archive` directory, it is possible to have an arbitrary directory structure. For example, a user may add
+
+```
+collA/archive/group-1/warc1.gz
+collA/archive/group-2/warc2.gz
+...
+```
+
+### Manual Indexing
+
+If manually adding ARC/WARCs to the archive, it is necessary to update the indexes in the `indexes` directory.
+
+For example, you may run `wayback-manager collA reindex` to automatically reindex all the files in the archive directory.
+
+For larger archives, this may be a bit slower. It is also possible to reindex specific files by running:
+
+```wayback-manager collA index collections/collA/archive/group-1/warc1.gz collections/collA/archive/group-2/warc2.gz```
+
+This command will index the specified files and merged the resulting index (CDX) with the existing index.
+This is particularly useful if adding WARC files manually.
+
+### Removing Files
+
+As this is an archive, is not common, and there is no manager command for doing so.
+If WARC/ARC files are removed manually from the `archive` directory, you can simply run the `wayback-manager <coll> reindex` to build the index.
+
+### Custom Indexes
+
+By default, all archive files are indexed into a single `indexes/index.cdx`. However, the entire `indexes` directory is searched for indexes on startup.
+
+The allows for creating very flexible setups, and running the `cdx-indexer` tool manually to create indexes
+as desired.
+
+### Custom Config
+
+It is also possible to create a per-collection `config.yaml` to override any of the default setting.
+
+For example, to add a remote archive destination in addition to the local `./archive/` directory, one could specify in the per-collection `config.yaml`
+
+```
+archive_paths:
+   - ./archive
+   - http://archive.path.example.com/path/to/archive/
+```
+
+Both locations would then be checked to locate an archive file.
+All [existing additional loading options](Additional-Archive-Loading-Options) are supported.
+
+
+
+
+## More Information
+
+For the latest command manager reference, you may run
+`wayback-manager --help`
 
 
 
