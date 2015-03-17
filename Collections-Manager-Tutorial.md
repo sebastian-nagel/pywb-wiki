@@ -1,4 +1,4 @@
-** Please note: this documentation is for the pywb 0.9.0 beta release. Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs. Thanks! **
+**Please note: this documentation is for the pywb 0.9.0 beta release. Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs. Thanks!**
 
 # Introducing Auto-Configuration and Collection Manager
 
@@ -23,7 +23,8 @@ my_archive:
         ...
 ```
 
-## Wayback Collections Manager
+
+## Wayback Collections Manager Tutorial
 
 To assist the user in setting up a new collection quickly and easily, pywb comes with a new `wayback-manager` utility. The utility can be used from the command-line to quickly create collections, add archive files (WARC/ARCS), and custom UI templates, static resources, and even user metadata.
 
@@ -144,6 +145,7 @@ by the Wayback application.
 For example, if you create `collections/collA/static/mycss.css`, and run `wayback`,
 you can access the css file via: `http://localhost:8080/static/collA/mycss.css`
 
+
 ## Advanced Usage
 
 The following are some more advanced usage scenarios.
@@ -176,6 +178,8 @@ This is particularly useful if adding WARC files manually.
 As this is an archive, is not common, and there is no manager command for doing so.
 If WARC/ARC files are removed manually from the `archive` directory, you can simply run the `wayback-manager <coll> reindex` to build the index.
 
+HTML templates may be removed with ```wayback-manager template --remove <name>```.
+
 ### Custom Indexes
 
 By default, all archive files are indexed into a single `indexes/index.cdx`. However, the entire `indexes` directory is searched for indexes on startup.
@@ -197,7 +201,6 @@ archive_paths:
 
 Both locations would then be checked to locate an archive file.
 All [existing additional loading options](Additional-Archive-Loading-Options) are supported.
-
 
 
 
