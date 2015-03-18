@@ -170,11 +170,11 @@ collA/archive/group-2/warc2.gz
 
 If manually adding ARC/WARCs to the archive, it is necessary to update the indexes in the `indexes` directory.
 
-For example, you may run `wayback-manager collA reindex` to automatically reindex all the files in the archive directory.
+For example, you may run `wayback-manager reindex collA` to automatically reindex all the files in the archive directory.
 
 For larger archives, this may be a bit slower. It is also possible to reindex specific files by running:
 
-```wayback-manager collA index collections/collA/archive/group-1/warc1.gz collections/collA/archive/group-2/warc2.gz```
+```wayback-manager index collA collections/collA/archive/group-1/warc1.gz collections/collA/archive/group-2/warc2.gz```
 
 This command will index the specified files and merged the resulting index (CDX) with the existing index.
 This is particularly useful if adding WARC files manually.
@@ -182,7 +182,7 @@ This is particularly useful if adding WARC files manually.
 ### Removing Files
 
 As this is an archive, is not common, and there is no manager command for doing so.
-If WARC/ARC files are removed manually from the `archive` directory, you can simply run the `wayback-manager <coll> reindex` to build the index.
+If WARC/ARC files are removed manually from the `archive` directory, you can simply run the `wayback-manager reindex <coll>` to build the index.
 
 HTML templates may be removed with ```wayback-manager template --remove <name>```.
 
