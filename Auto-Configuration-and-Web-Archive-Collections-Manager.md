@@ -1,13 +1,3 @@
-**Please note: this documentation is for the pywb 0.9.0 beta release.**
-
-**To use, please install via: `pip install pywb==0.9.0b1`**
-
-**Please feel free to [submit an issue](https://github.com/ikreymer/pywb/issues) for any suggestions, improvements or errors found in these docs.**
-
-**Any feedback on new conventions/names introduced is especially welcome.**
-
-**Thanks!**
-
 ## Introducing Auto-Configuration and Collection Manager
 
 With release 0.9.0, pywb Wayback Machine features a new 'auto-configuration' or 'convention-over-configuration' system. No config files are required and collections are loaded automatically based on designated directory structure. (Deployments with existing `config.yaml` files will continue to work, as an existing `config.yaml` will take precedence).
@@ -34,7 +24,7 @@ my_archive:
 
 ## Tutorial
 
-To assist the user in setting up a new collection quickly and easily, pywb comes with a new `wayback-manager` utility. The utility can be used from the command-line to quickly create collections, add archive files (WARC/ARCS), and custom UI templates, static resources, and even user metadata.
+To assist the user in setting up a new collection quickly and easily, pywb comes with a new `wb-manager` utility. The utility can be used from the command-line to quickly create collections, add archive files (WARC/ARCS), and custom UI templates, static resources, and even user metadata.
 
 The following brief tutorial shows how to use the new management utility.
 
@@ -42,7 +32,7 @@ The following brief tutorial shows how to use the new management utility.
 
 First, make sure that the latest pywb is installed -- this can be done by running:
 
-`pip install pywb==0.9.0b1` or, if you've cloned the repo, `python setup.py install`
+`pip install pywb` or, if you've cloned the repo, `python setup.py install`
 
 Once pywb is installed, it is best to start with a clean directory for your archive.
 
@@ -54,7 +44,7 @@ should be a good start.
 
 To create a new collection, you can run
 
-```wayback-manager init collA```
+```wb-manager init collA```
 
 This command will create the `collections` subdirectory, `collA` directory and all the other required directories.
 
@@ -71,7 +61,7 @@ my_archive:
 ```
 
 To verify that the collection has been created you may run:
-```wayback-manager list```
+```wb-manager list```
 
 This should print out a list:
 ```
@@ -85,16 +75,16 @@ The new collection now exists, so it's time to add some archive files.
 
 A collection consists of any number of archive files (WARC or ARC) format. Any number of ARC/WARC files can be added to the collection by running:
 
-```wayback-manager add <collName> <path/to/warc> <path/to/another_warc> ...```
+```wb-manager add <collName> <path/to/warc> <path/to/another_warc> ...```
 
 Multiple files can added at once. For instance, if you have a directory of ARC/WARC files ready, you may add them
 at once by running:
 
-```wayback-manager add collA /path/to/warcs/*.warc.gz```
+```wb-manager add collA /path/to/warcs/*.warc.gz```
 
 If you do not have any WARC files, you can use https://webrecorder.io to record any page, then download the WARC file (it will have a `.warc.gz` extension). To add this new file, you can do:
 
-```wayback-manager add ~/Downloads/mynewwarcfile.warc.gz```
+```wb-manager add ~/Downloads/mynewwarcfile.warc.gz```
 
 All the added files will be copied to `collections/collA/archive` directory and will be automatically indexed.
 
@@ -102,7 +92,6 @@ Now that you've added the WARC, you can run ``wayback``. One the home page, `htt
 
 If you know a url in the WARC file, you can enter it in the search box to see the capture.
 
-*Automated page listing coming soon*
 
 ### Adding Collection Metadata
 
@@ -113,11 +102,11 @@ Metadata consists of `name=values` pairs and will be stored in each collection's
 The `title` metadata will also be used on the home page and collection search page.
 To add a title:
 
-```wayback-manager metadata collA --set title="My First Collection"```
+```wb-manager metadata collA --set title="My First Collection"```
 
 To add another metadata, say description, you can run
 
-```wayback-manager metadata collA --set desc="Testing Out Metadata"```
+```wb-manager metadata collA --set desc="Testing Out Metadata"```
 
 Now, when you run ```wayback``` and navigate to the home page, you should see
 `collA - My First Collection` listed.
@@ -134,12 +123,12 @@ To make it easier for users to modify any aspect of the html, the manager can co
 
 To copy the home page template, which will be created in `templates/index.html` you can run: 
 
-```wayback-manager template add home_html```
+```wb-manager template add home_html```
 
 To copy the `search.html` template for collA, which will be created in `collections/collA/templates/search.html`,
 you can run:
 
-```wayback-manager template add collA search_html```
+```wb-manager template add collA search_html```
 
 To change the home page, you can simply edit `templates/index.html` or replace the file completely.
 
@@ -170,11 +159,11 @@ collA/archive/group-2/warc2.gz
 
 If manually adding ARC/WARCs to the archive, it is necessary to update the indexes in the `indexes` directory.
 
-For example, you may run `wayback-manager reindex collA` to automatically reindex all the files in the archive directory.
+For example, you may run `wb-manager reindex collA` to automatically reindex all the files in the archive directory.
 
 For larger archives, this may be a bit slower. It is also possible to reindex specific files by running:
 
-```wayback-manager index collA collections/collA/archive/group-1/warc1.gz collections/collA/archive/group-2/warc2.gz```
+```wb-manager index collA collections/collA/archive/group-1/warc1.gz collections/collA/archive/group-2/warc2.gz```
 
 This command will index the specified files and merged the resulting index (CDX) with the existing index.
 This is particularly useful if adding WARC files manually.
@@ -182,16 +171,20 @@ This is particularly useful if adding WARC files manually.
 ### Removing Files
 
 As this is an archive, is not common, and there is no manager command for doing so.
-If WARC/ARC files are removed manually from the `archive` directory, you can simply run the `wayback-manager reindex <coll>` to build the index.
+If WARC/ARC files are removed manually from the `archive` directory, you can simply run the `wb-manager reindex <coll>` to build the index.
 
-HTML templates may be removed with ```wayback-manager template --remove <name>```.
+HTML templates may be removed with ```wb-manager template --remove <name>```.
 
 ### Custom Indexes
 
-By default, all archive files are indexed into a single `indexes/index.cdx`. However, the entire `indexes` directory is searched for indexes on startup.
+By default, all archive files are indexed into a single `indexes/index.cdxj`. However, the entire `indexes` directory is searched for indexes on startup.
 
 The allows for creating very flexible setups, and running the `cdx-indexer` tool manually to create indexes
 as desired.
+
+### Converting Legacy Indexes
+
+If you have existing .cdx files in any format, you can run ``wb-manager convert-cdx <path/to/cdx>`` to convert the files to the default format used by pywb (cdx-json, with .cdxj extension).
 
 ### Custom Config
 
@@ -213,7 +206,7 @@ All [existing additional loading options](Additional-Archive-Loading-Options) ar
 ## More Information
 
 For the latest command manager reference, you may run
-`wayback-manager --help`
+`wb-manager --help`
 
 
 
