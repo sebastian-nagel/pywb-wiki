@@ -1,0 +1,1 @@
+This page has now moved to https://github.com/ikreymer/pywb/wiki/Auto-Configuration-and-Web-Archive-Collections-Manager
