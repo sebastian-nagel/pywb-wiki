@@ -39,3 +39,47 @@ This will make the endpoint be `http://localhost:8080/pywb-index` instead
 
 
 # API Reference
+
+The following is a list of available query params, as of pywb 0.9.1
+
+### `url`
+
+The only required parameter to the cdx server api is the url, ex:
+`http://localhost:8080/coll-cdx?url=example.com`
+
+will return a list of captures for 'example.com'
+
+
+### `matchType`
+
+The cdx server supports the following `matchType`
+
+- `exact` -- default setting, will return captures that match the url exactly
+
+- `prefix` -- return captures that begin with a specified path, eg: `http://example.com/path/*`
+
+- `host` -- return captures which for a begin host (the path segment is ignored if specified)
+
+- `domain` -- return captures for the current host and all subdomains, eg. `*.example.com`
+
+As a shortcut, instead of specifying a separate `matchType` parameter, wildcards may be used in the url:
+
+- `...coll-cdx?url=http://example.com/path/*` is equivalent to `...coll-cdx?url=http://example.com/path/&matchType=prefix`
+
+- `...coll-cdx?url=*.example.com` is equivalent to `...coll-cdx?url=example.com&matchType=domain`
+
+*Note: if you are using legacy cdx index files which are not SURT-ordered, the `domain` option will not be available. if this is the case, you can use the `wb-manager convert-cdx` option to easily convert any cdx to latest format`*
+
+### `limit`
+
+Setting `limit=` will limit the number of index lines returned. Limit must be set to a positive integer. If no limit is provided, all the matching lines are returned, which may be slow. (If using a ZipNum compressed cluster, the page size limit is enforced and no captures are read beyond the single page. See Pagination API for more info).
+
+### `sort`
+
+The `sort` param can be set as follows:
+
+- `reverse` -- will sort the matching captures in reverse order. It is only recommended for `exact` query as reverse a large match may be very slow. (An optimized version is planned)
+
+- `closest` -- setting this option also requires setting `closest=<ts>` where `<ts>` is a specific timestamp to sort by. This option will only work correctly for `exact` query and is useful for sorting captures based no time distance from a certain timestamp. (pywb uses this option internally for replay in order to fallback to 'next closest' capture if one fails)
+
+Both options may be combined with `limit` to return the top N closest, or the last N results.
