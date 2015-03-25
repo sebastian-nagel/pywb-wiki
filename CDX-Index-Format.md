@@ -21,4 +21,4 @@ The [webarchive-indexing](https://github.com/ikreymer/webarchive-indexing) proje
 ### Single-Shard Index
 
 A ZipNum index need not have multiple shards, and provides advantages even for smaller datasets. 
-For example, in addition to less disk space from using compressed index, using the ZipNum index allows for the [Pagination API]() to be available when using the cdx server for bulk querying.
+For example, in addition to less disk space from using compressed index, using the ZipNum index allows for the [Pagination API](https://github.com/ikreymer/pywb/wiki/CDX-Server-API#pagination-api) to be available when using the cdx server for bulk querying.
