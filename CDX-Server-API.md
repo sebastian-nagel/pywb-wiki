@@ -1,7 +1,7 @@
 In addition to replay capabilities, pywb also provides an extensive api for querying the capture index (CDX).
 
 The api can be used to get information about a range of archive captures/mementos, including filtering, sorting, and pagination for bulk query. The actual archive files (WARC/ARC) files are not loaded during this query, only
-the generated CDX index.
+the generated CDX index. pywb actually uses this same api internally to perform all index lookups in a consistent way.
 
 For example, the following query might return the first 10 results from host http://example.com/* where
 the mime type is text/html:
@@ -83,3 +83,20 @@ The `sort` param can be set as follows:
 - `closest` -- setting this option also requires setting `closest=<ts>` where `<ts>` is a specific timestamp to sort by. This option will only work correctly for `exact` query and is useful for sorting captures based no time distance from a certain timestamp. (pywb uses this option internally for replay in order to fallback to 'next closest' capture if one fails)
 
 Both options may be combined with `limit` to return the top N closest, or the last N results.
+
+### `output` (JSON output)
+
+Setting `output=json` will return each line as a proper JSON dictionary. (Default format is `text` which will return the native format of the underlying CDX index, and may not be consistent). Using `output=json` is recommended for extensive analysis and it may become the default option in a future release.
+
+### `filter`
+
+The `filter` param can be specified multiple times to filter by specific fields in the cdx index. Field names correspond to the fields returned in the JSON output. Filters can be specified as follows:
+
+```...coll-cdx?url=example.com/*&filter=mime:text/html&!status:200```
+
+Return captures from example.com/* where mime is text/html and http status is not 200.
+
+The `!` modified before `status` indicates negation. The `~` modifier can also be used to specify a regex
+instead of exact filter match. For example: `filter=~mime:text/.*` will match any CDX line where `mime` field
+matches the regex `text/.*`. Negation and regex modifier may be combined, eg. `filter=!~text/.*`
+
