@@ -100,3 +100,14 @@ The `!` modified before `status` indicates negation. The `~` modifier can also b
 instead of exact filter match. For example: `filter=~mime:text/.*` will match any CDX line where `mime` field
 matches the regex `text/.*`. Negation and regex modifier may be combined, eg. `filter=!~text/.*`
 
+### `fl`
+
+The `fl` param can be used to specify which fields to include in the output. The standard available fields are usually: `urlkey`, `timestamp`, `url`, `mime`, `status`, `digest`, `length`, `offset`, `filename`
+
+If a minimal cdx index is used, the `mime` and `status` fields may not be available. Additional fields may be introduced in the future, especially in the CDX JSON format.
+
+Fields can be comma delimited, for example `fl=urlkey,timestamp` will only include the `urlkey`, `timestamp` and `filename` in the output.
+
+## Pagination API
+
+The cdx server supports an optional pagination api, available when using a [ZipNum Compressed Index](CDX-Index-Format#zipnum-sharded-cdx) instead of a plain text cdx files.
