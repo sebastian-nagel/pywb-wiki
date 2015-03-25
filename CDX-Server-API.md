@@ -92,7 +92,7 @@ Setting `output=json` will return each line as a proper JSON dictionary. (Defaul
 
 The `filter` param can be specified multiple times to filter by specific fields in the cdx index. Field names correspond to the fields returned in the JSON output. Filters can be specified as follows:
 
-```...coll-cdx?url=example.com/*&filter=mime:text/html&!status:200```
+`...coll-cdx?url=example.com/*&filter=mime:text/html&!status:200`
 
 Return captures from example.com/* where mime is text/html and http status is not 200.
 
