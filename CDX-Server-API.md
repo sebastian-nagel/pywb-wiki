@@ -110,4 +110,41 @@ Fields can be comma delimited, for example `fl=urlkey,timestamp` will only inclu
 
 ## Pagination API
 
-The cdx server supports an optional pagination api, available when using a [ZipNum Compressed Index](CDX-Index-Format#zipnum-sharded-cdx) instead of a plain text cdx files.
+The cdx server supports an optional pagination api, but it is currently only available when using [ZipNum Compressed Index](CDX-Index-Format#zipnum-sharded-cdx) instead of a plain text cdx files. (Additional pagination support may be added for CDXJ files as well).
+
+The pagination api supports the following params:
+
+### `page`
+
+`page` is the current page number, and defaults to 0 if omitted. If the `page` exceeds the number of available `pages` from the page count query, a 400 error will be returned.
+
+
+### `pageSize`
+
+`pageSize` is an optional parameter which can increase or decrease the amount of data returned in each page.
+The default setting can be configuration dependent.
+
+
+### `showPageCount=true`
+
+This is a special query which, if successful, always returns a json result of the form. The query should be very quick regardless of the size of the query.
+
+```
+{"blocks": 423, "pages": 85, "pageSize": 5}
+```
+
+In this result:
+  - `pages` is the total number of pages available for this query. The `page` parameter may be between 0 and `pages - 1` 
+
+  - `pageSize` is the total number of ZipNum compressed blocks that are read for each page. The default value can be set in the pywb `config.yaml` via the `max_blocks: 5` option. 
+
+  - `blocks` is the actual number of compressed blocks that match the query. This can be used to quickly estimate the total number of captures, within a margin of error. In general, `blocks / pageSize + 1 = pages` (since there is always at least 1 page even if `blocks < pageSize`) 
+
+If changing `pageSize`, the same value should be used for both the `showNumPages` query and the regular paged query. ex:
+   - Use `...pageSize=2&showPageCount=true` and read `pages` to get total number of pages
+
+   - Use `...pageSize=2&page=N` to read the `N`-th pages from 0 to `pages-1`
+
+### `showPagedIndex=true`
+
+When this param is set, the returned data is the *secondary index* instead of the actual CDX. Each line represents a compressed cdx block, and the number of lines returned should correspond to the `blocks` value in `showNumPages` query. This query is used internally before reading the actual compressed blocks and should be significantly faster. At this time, this option can not be combined with other query params listed in the api, except for `output=json` (which is recommended to get a consistent json result).
