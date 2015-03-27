@@ -11,7 +11,7 @@ Several organizations run public services which use pywb that you may explore di
 
 * `WebRecorder.io <https://webrecorder.io>`_ uses pywb and builds upon pywb-webrecorder to create a hosted web recording and replay system.
 
-* `CommonCrawl Index <index.commoncrawl.org>`_ uses pywb cdx-server to provide a bulk query index for CommonCrawl data
+* `CommonCrawl Index <http://index.commoncrawl.org>`_ uses pywb cdx-server to provide a bulk query index for CommonCrawl data
 
 
 *If you have another service that should be on this list, please do not hesitate to contact and it will be added!*
