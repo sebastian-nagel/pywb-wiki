@@ -123,12 +123,12 @@ To make it easier for users to modify any aspect of the html, the manager can co
 
 To copy the home page template, which will be created in `templates/index.html` you can run: 
 
-```wb-manager template add home_html```
+```wb-manager template --add home_html```
 
 To copy the `search.html` template for collA, which will be created in `collections/collA/templates/search.html`,
 you can run:
 
-```wb-manager template add collA search_html```
+```wb-manager template --add search_html collA```
 
 To change the home page, you can simply edit `templates/index.html` or replace the file completely.
 
