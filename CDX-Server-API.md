@@ -40,7 +40,7 @@ This will make the endpoint be `http://localhost:8080/pywb-index` instead
 
 # API Reference
 
-The following is a list of available query params, as of pywb 0.9.1
+Unless otherwise specified, all API params are available from pywb 0.9.1.
 
 ### `url`
 
@@ -48,6 +48,18 @@ The only required parameter to the cdx server api is the url, ex:
 `http://localhost:8080/coll-cdx?url=example.com`
 
 will return a list of captures for 'example.com'
+
+
+### `from` / `to`
+
+Setting `from=<ts>` or `to=<ts>` will restrict the results to the given date/time range (inclusive).
+
+Timestamps may be <=14 digits and will be padded to either lower or upper bound.
+
+For example, `...coll-cdx?url=example.com&from=2014&to=2014` will return results of `example.com` that
+have a timestamp between `20140101000000` and `20141231235959`
+
+*Available from pywb 0.10.9*
 
 
 ### `matchType`
