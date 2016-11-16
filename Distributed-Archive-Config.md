@@ -118,24 +118,29 @@ When loading content, it may be loaded from either the live web or from a local 
 
 ### Sequence Fallback
 
-The above demonstrates how to load from multiple archives simultaneously. In some cases, it may be beneficial to first check a local source, and then fall back to a remote source, if the local source does not have the requested memento.
-
+In some cases, it may be beneficial to first check a local source, and then fall back to one or more remote sources, if the local source is not available or does not contain the requested memento url.
+This can be done with a setup as follows:
 
 ```
 collections:
    many:
        sequence:
          - 
-           index: ./local/index
+           index: ./local/index/
            content:
-                  ./local/warcs
+               ./local/warcs
          -
            index:
                ia: cdx:web+http://web.archive.org/cdx
                aqpt: memento+http://arquivo.pt/wayback/
                rhiz: cdx+http://webenact.rhizome.org/all-cdx
-               local: ./local/index
        
-           index_timeout: 5.0
+           index_timeout: 3.0
 
 ```
+
+In this example, there is first a local CDX lookup for files located in `./local/index`. If the lookup fails,
+3 remote sources (2 cdx, 1 memento) are queried. If they return a successful match within 3.0 seconds, the lookup succeeds,
+otherwise there is an error.
+With the `sequence` setup, it should be possible to specify additional indexes to consult if the second lookup fails.
+This could be used to set up a chain of remote archives to try successively until a successful response is found.
