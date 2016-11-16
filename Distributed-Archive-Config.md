@@ -1,4 +1,4 @@
-Distributed Archive Schema (Draft)
+## Distributed Archive Schema (Draft)
 
 *Note: this implementation is a work in progress*
 
@@ -118,9 +118,10 @@ When loading content, it may be loaded from either the live web or from a local 
 
 ### Sequence Fallback
 
-The above demonstrates how to load from multiple archives simultaneously. However, it may be beneficial to first check a local source, and only then fall back to a remote source, if the local source does not have the requested memento.
+The above demonstrates how to load from multiple archives simultaneously. In some cases, it may be beneficial to first check a local source, and then fall back to a remote source, if the local source does not have the requested memento.
 
 
+```
 collections:
    many:
        sequence:
