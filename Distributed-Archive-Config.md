@@ -140,8 +140,9 @@ It is also possible to specify a 'live' collection, where the lookup is simply t
 ```
 collections:
    live:
-      -
-        type: live
+      index:
+        -
+          type: live
 ```
 
 or simply:
@@ -289,4 +290,110 @@ If omitted, the `warc-prefix` or `warc-index` is determined automatically based 
 ## Resource API
 
 The Resource API uses the Index API and the Resource Loader to return a valid WARC record of the requested resource.
+
+As such, the Resource API is identical to the Index API and differs only in the response, which is either a valid WARC record (200) or a 404 Not Found.
+
+If the index API query is:
+```
+=> GET /many/index?url=http://example.com&output=json&closest=2016
+<=
+{... "timestamp": "2016", "live_url": "http://webenact.rhizome.org/all/2016id_/http://example.com/", "source": "rhiz", "source_type": "cdx"},
+{... "timestamp": "2015", "live_url": "http://web.archive.org/web/2015id_/http://example.com/", "source": "ia", "source_type" "cdx"},
+{... "timestamp": "2014", "filename": "warc-name.gz", "offset": "0", "length": "1000", "source": "local", "source_type": "file"},
+{... "timestamp": "2013", "live_url": "http://arquivo.pt/wayback/2013id_/http://example.com/", "source": "aqpt", "source_type": "memento"}
+```
+
+the resource API query would be:
+```
+=> GET /many/resource?url=http://example.com&output=json&closest=2016
+<= application/warc-record
+```
+
+The resource API returns only WARC records.
+Each response from the Index API is tried, until there is a successful resource load. If the resource is a live web resource, it is converted on the fly to a WARC response.
+If it is already a WARC response, it is returned as is.
+(If it is an ARC record, it is converted to a WARC record on the fly as well)
+
+This logic can be explained with roughly the following pseudo-code:
+
+```
+for each response from Index API
+   try
+     if liveweb loader:
+       load from live web
+       convert to WARC response
+       return WARC response
+
+     if WARC loader:
+       resolve absolute WARC path
+       return WARC response
+   catch:
+      continue to next line
+
+return 404 Not Found, error info
+
+```
+
+### Live Web Resources
+
+This approach can also be used to load live web resources and wrap them in a WARC record.
+For example, if a collection is defined as a live web collection:
+
+```
+collections:
+   live: $live
+```
+
+The the resource API request to:
+```
+=> GET /live/resource?url=http://example.com/
+<= application/warc-record
+```
+
+results in a live request to `http://example.com/` and the response from the server is wrapped in a WARC response record and returned.
+
+### Other HTTP Methods
+
+The resource API is not limited GET methods, but can support any other method as well.
+For example,
+
+```
+=> POST /live/resource?url=http://httpbin.org/post`
+...
+<post data>
+
+<= application/warc-record
+```
+
+should perform a POST to the live resource. POST data can also be looked up in a local CDX index which supports POST request resolution.
+
+### Resource API via POST
+
+There are limitations on supporting custom http methods in this way. For example, it would not be possible to use a HEAD request and retrieve a warc-record of the response. Additionally, HTTP headers sent to the Resource API may not be the ones that should be sent to the archival or live server.
+
+For this reason, the Resource API also supports an all-POST interface. In this mode, the HTTP request that is sent to the remote server (or used for lookup) is the POST data.
+
+For example, requesting http://example.com/ might be done with:
+```
+=> POST /live/resource-post?url=http://example.com/
+...
+<= GET /
+User-Agent: ...
+...
+```
+
+It should even be possible to record a HEAD request and other requests in this way:
+
+```
+=> POST /live/resource-post?url=http://example.com/
+...
+HEAD /
+User-Agent: ...
+...
+<= application/warc-record
+```
+
+The response is always a valid WARC record, which could then be used for replay, recorded, etc...
+
+
 
