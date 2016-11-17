@@ -369,7 +369,7 @@ should perform a POST to the live resource. POST data can also be looked up in a
 
 ### Resource API via POST
 
-There are limitations on supporting custom http methods in this way. For example, it would not be possible to use a HEAD request and retrieve a warc-record of the response. Additionally, HTTP headers sent to the Resource API may not be the ones that should be sent to the archival or live server.
+However, there are limitations on supporting different http methods in this way. It would not be possible to use a HEAD request and retrieve a WARC record of the response. Additionally, HTTP headers sent to the Resource API may not be the ones that should be sent to the archival or live server.
 
 For this reason, the Resource API also supports an all-POST interface. In this mode, the HTTP request that is sent to the remote server (or used for lookup) is the POST data.
 
@@ -377,9 +377,10 @@ For example, requesting http://example.com/ might be done with:
 ```
 => POST /live/resource-post?url=http://example.com/
 ...
-<= GET /
+GET /
 User-Agent: ...
 ...
+<= application/warc-record
 ```
 
 It should even be possible to record a HEAD request and other requests in this way:
