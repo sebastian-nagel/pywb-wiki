@@ -306,11 +306,29 @@ If the index API query is:
 the resource API query would be:
 ```
 => GET /many/resource?url=http://example.com&output=json&closest=2016
-<= application/warc-record
+...
+<= HTTP/1.0
+Content-Type: application/warc-record
+Archive-Source-Coll: rhiz
+Memento-Datetime: ...
+
+
+...
+WARC/1.0
+WARC-Date: 2016
+WARC-Target-URI: http://example.com/
+Link: <http://example.com>; rel="original"
+...
 ```
 
-The resource API returns only WARC records.
-Each response from the Index API is tried, until there is a successful resource load. If the resource is a live web resource, it is converted on the fly to a WARC response.
+The response format includes the WARC record as the response body.
+The headers for the response include additional metadata, such as `Archive-Source-Coll` which indicates the source of the archive that this response is coming from, and is just the `source` field in the index response line. This allows the user to know exactly which archive returned this response.
+
+The headers also include standard URL-M memento headers to indicate that this WARC response is a memento (without having to parse the WARC record even). This should allow the Resource API endpoint to also serve as a valid memento endpoint (TODO).
+
+### Resource Loading Logic
+
+Each response line from the Index API is attempted, until there is a successful resource load. If the resource is a live web resource, it is converted on-the-fly to a WARC response.
 If it is already a WARC response, it is returned as is.
 (If it is an ARC record, it is converted to a WARC record on the fly as well)
 
