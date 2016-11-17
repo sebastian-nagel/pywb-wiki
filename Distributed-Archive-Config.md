@@ -67,7 +67,7 @@ collections:
 ```
 
 In addition to the timegate and timemap urls, a replay url is specified for accessing the 'raw' unaltered memento.
-The schema urls can include special variables `{url}` and `{timestamp}` variables which are interpolated to retrieve the final urls to lookup.
+The schema urls can include special variables `{url}` and `{timestamp}` which are interpolated to retrieve the final urls to lookup.
 
 Since the resource is loaded directly from the specified replay url, the `resource: $live` is used to indicate
 the use of a live loader (as opposed to loading from a WARC file) in the full schema.
