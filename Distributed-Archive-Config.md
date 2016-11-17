@@ -28,14 +28,12 @@ with a full schema:
 collections:
     local:
         index:
-            -
               type: file
               path: file:///local/index/
 
         resource:
-              warc:
-                 - file:///local/warcs
-                 - http://remote/path/to/warcs
+              - file:///local/warcs
+              - http://remote/path/to/warcs
 ```
 
 A more simplified schema of the above can be written as:
@@ -57,11 +55,10 @@ A memento-API based archive can be specified as follows in the full schema:
 collections:
     aqpt:
        index:
-          -
-            type: memento
-            timegate_url: http://arquivo.pt/wayback/{url}
-            timemap_url: http://arquivo.pt/wayback/timemap/link/{url}
-            replay_url: http://arquivo.pt/wayback/{timestamp}id_/{url}
+          type: memento
+          timegate_url: http://arquivo.pt/wayback/{url}
+          timemap_url: http://arquivo.pt/wayback/timemap/link/{url}
+          replay_url: http://arquivo.pt/wayback/{timestamp}id_/{url}
 
        resource: $live
 ```
@@ -90,10 +87,9 @@ Loading from a CDX API based archive can be specified in a similar way:
 collections:
     rhiz:
        index:
-          -
-            type: cdx
-            api_url: http://webenact.rhizome.org/all-cdx?url={url}&closest={timestamp}
-            replay_url: http://webenact.rhizome.org/all/{timestamp}id_/{url}
+          type: cdx
+          api_url: http://webenact.rhizome.org/all-cdx?url={url}&closest={timestamp}
+          replay_url: http://webenact.rhizome.org/all/{timestamp}id_/{url}
 
        resource: $live
 
@@ -117,10 +113,9 @@ When the replay url is a different, such as:
 collections:
     ia:
        index:
-          -
-            type: cdx
-            api_url: http://web.archive.org/cdx?url={url}&closest={timestamp}
-            replay_url: http://web.archive.org/web/{timestamp}id_/{url}
+          type: cdx
+          api_url: http://web.archive.org/cdx?url={url}&closest={timestamp}
+          replay_url: http://web.archive.org/web/{timestamp}id_/{url}
 
        resource: $live
 
@@ -139,10 +134,9 @@ It is also possible to specify a 'live' collection, where the lookup is simply t
 
 ```
 collections:
-   live:
-      index:
-        -
-          type: live
+    live:
+        index:
+            type: live
 ```
 
 or simply:
@@ -152,6 +146,9 @@ collections:
     live: $live
 ```
 
+Since there is no index to lookup, the special `$live` index is simply a placeholder to be used for resource loading.
+This index always returns a successful result with the requested url and current timestamp.
+
 #### Replay from WARC/ARC
 
 The above assumes resource is loaded directly from the live web, not from a WARC/ARC file.
@@ -159,9 +156,9 @@ It would also be possible to configure a remote CDX API index, where the resourc
 
 ```
 collections:
-   remote-cdx:
-      index: cdx+http://path/to/cdx/server
-      resource: http://path/to/warc/storage
+    remote-cdx:
+        index: cdx+http://path/to/cdx/server
+        resource: http://path/to/warc/storage
 
 ```
 
@@ -174,22 +171,23 @@ The main benefit of such a definition would be to allow more complex loaders to 
 
 ```
 collections:
-   many:
-       index:
+    many:
+        index_group:
            ia: cdx+http://web.archive.org/cdx /web
            aqpt: memento+http://arquivo.pt/wayback/
            rhiz: cdx+http://webenact.rhizome.org/all-cdx
            local: ./local/index
        
-       resource:
+        resource:
            - $live
            - ./local/warcs
 
-       index_timeout: 5.0
+        index_timeout: 5.0
 
 ```
 
-The above schema would specify that urls should be looked up in 4 sources, 2 cdx-server based, 1 memento based,
+The `index_group` heading indicates a mapping of several indexes that should be considered simultaneously.
+The above schema would defines  4 sources, 2 cdx-server based, 1 memento based,
 and 1 local source. Each source will have a timeout of 3.0 secs so that if a source does not return then, it is ignored.
 When loading the resource, it may be loaded from either the live web or from a local WARCs directory.
 
@@ -201,24 +199,22 @@ In some cases, it may be beneficial to first check a local source, and then fall
 collections:
    seq_fallback:
        sequence:
-         - 
-           index: ./local/index/
+         - index: ./local/index/
            resource:
                ./local/warcs
-         -
-           index:
+         - index_group:
                ia: cdx+http://web.archive.org/cdx /web
                aqpt: memento+http://arquivo.pt/wayback/
                rhiz: cdx+http://webenact.rhizome.org/all-cdx
        
            index_timeout: 3.0
 
-         - index: live
+         - index: $live
 
 ```
 
 In this example, there is first a local CDX lookup for files located in `./local/index`.
-If the lookup fails, 3 remote sources (2 cdx, 1 memento) are queried. If they return a successful match within 3.0 seconds, the lookup succeeds. If this second lookup fails, the live lookup is performed (which always succeeds).
+If the lookup fails, an index group of 3 remote sources (2 cdx, 1 memento) is queried. If at least one of the sources returns a successful match within 3.0 seconds, the lookup stops there. If this second lookup fails, the third lookup in the list is used, which is a live web lookup (which always succeeds as the index stage).
 
 With the `sequence` setup, it should be possible to specify as many lookups as needed, and set timeout values for each step of the way.
 
