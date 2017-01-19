@@ -137,7 +137,7 @@ The pagination api supports the following params:
 The default setting can be configuration dependent.
 
 
-### `showPageCount=true`
+### `showNumPages=true`
 
 This is a special query which, if successful, always returns a json result of the form. The query should be very quick regardless of the size of the query.
 
@@ -153,7 +153,7 @@ In this result:
   - `blocks` is the actual number of compressed blocks that match the query. This can be used to quickly estimate the total number of captures, within a margin of error. In general, `blocks / pageSize + 1 = pages` (since there is always at least 1 page even if `blocks < pageSize`) 
 
 If changing `pageSize`, the same value should be used for both the `showNumPages` query and the regular paged query. ex:
-   - Use `...pageSize=2&showPageCount=true` and read `pages` to get total number of pages
+   - Use `...pageSize=2&showNumPages=true` and read `pages` to get total number of pages
 
    - Use `...pageSize=2&page=N` to read the `N`-th pages from 0 to `pages-1`
 
